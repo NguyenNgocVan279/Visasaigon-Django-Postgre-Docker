@@ -1,5 +1,16 @@
+# Python cache
 __pycache__/
 *.pyc
-.env
+
+# SQLite (nếu có)
 *.sqlite3
+
+# Environment variables
+.env
+
+# Logs
 *.log
+
+# IDE / Editor
+.vscode/
+.idea/
