@@ -8,6 +8,11 @@ done
 
 echo "Database is ready!"
 
+# Tạo migration nếu chưa có
+echo "Running makemigrations..."
+python manage.py makemigrations
+
+# Migrate database
 echo "Running migrations..."
 python manage.py migrate --noinput
 

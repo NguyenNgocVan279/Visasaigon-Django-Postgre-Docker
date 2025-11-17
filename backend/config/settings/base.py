@@ -11,6 +11,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 # Apps
 INSTALLED_APPS = [
+    "apps.accounts.apps.AccountsConfig",  # PHẢI ĐỂ DÒNG NÀY ĐẦU TIÊN
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -20,7 +21,6 @@ INSTALLED_APPS = [
 
     # My apps
     "core",
-    'apps.accounts',
 ]
 
 MIDDLEWARE = [
@@ -96,3 +96,6 @@ EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "")
 
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
