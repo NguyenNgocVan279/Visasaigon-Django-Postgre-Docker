@@ -19,9 +19,9 @@ services:
       - .env
     environment:
       # Các biến được lấy từ .env (an toàn hơn hard-code)
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     volumes:
       # Lưu dữ liệu DB vào volume riêng (persistent)
@@ -46,12 +46,14 @@ services:
     command: sh /app/docker/entrypoint.sh
     volumes:
       # Mount toàn bộ project từ host vào container
-      - .:/app
+      - .:/app # mount code dev trực tiếp
     ports:
       # Port web: host 8000 → container 8000
       - "8001:8000"
     env_file:
       - .env
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.dev
     depends_on:
       - db
     networks:

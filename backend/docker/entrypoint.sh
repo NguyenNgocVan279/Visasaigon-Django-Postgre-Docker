@@ -11,8 +11,14 @@ echo "Database is ready!"
 echo "Running migrations..."
 python manage.py migrate --noinput
 
-# echo "Collecting static files..."
-# python manage.py collectstatic --noinput
-
-echo "Starting Gunicorn server..."
-gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
+# Dev: chạy server Django với DEBUG=True
+if [ "$DJANGO_ENV" = "dev" ]; then
+  echo "Starting Django development server..."
+  python manage.py runserver 0.0.0.0:8000
+else
+  # Prod: collect static và chạy Gunicorn
+  echo "Collecting static files..."
+  python manage.py collectstatic --noinput
+  echo "Starting Gunicorn server..."
+  gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3
+fi
