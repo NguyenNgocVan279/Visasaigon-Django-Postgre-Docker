@@ -21,6 +21,12 @@ INSTALLED_APPS = [
 
     # My apps
     "core",
+    "apps.core_app",
+    "apps.visa",
+    "apps.clients",
+    "apps.blog",
+    "apps.faq",
+    "apps.pages",
 ]
 
 MIDDLEWARE = [
@@ -95,7 +101,3 @@ EMAIL_PORT = os.environ.get("EMAIL_PORT", "")
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "")
-
-
-AUTH_USER_MODEL = 'accounts.CustomUser'
-AUTH_USER_MODEL = 'accounts.CustomUser'

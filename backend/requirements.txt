@@ -4,3 +4,4 @@ dj-database-url>=2.1
 python-dotenv>=1.0
 django-environ==0.10.0
 gunicorn
+Pillow>=10.0.0
