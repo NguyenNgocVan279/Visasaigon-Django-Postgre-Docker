@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "apps.blog",
     "apps.faq",
     "apps.pages",
+    "apps.company",
 ]
 
 MIDDLEWARE = [
@@ -52,10 +53,13 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "apps.company.context_processors.company_profile", # Company profile
+                'apps.visa.context_processors.visa_countries', # countries
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"

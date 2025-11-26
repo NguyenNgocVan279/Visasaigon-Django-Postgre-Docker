@@ -1,0 +1,94 @@
+:root{
+    --primary:#B4E77A;
+    --accent:#f4d35e;
+    --muted:#f6f7fb;
+    --card-shadow: 0 6px 24px rgba(13,59,102,0.12);
+}
+body{background:var(--muted); color:#222;}
+.hero{background:linear-gradient(90deg, rgba(13,59,102,0.95) 0%, rgba(6,34,62,0.85) 100%); color:white; padding:56px 0}
+.hero .lead{opacity:.95}
+.badge-accent{background:var(--accent); color:#B4E77A}
+.info-card{background:white; border-radius:14px; box-shadow:var(--card-shadow); padding:22px}
+.section-title{color:var(--primary)}
+.img-clip{border-radius:12px; object-fit:cover; width:100%; height:100%}
+.alt-row{align-items:center}
+.feature-icon{width:52px; height:52px; background:linear-gradient(135deg,var(--accent),#ffd27f); border-radius:12px; display:inline-flex; align-items:center; justify-content:center; font-weight:700}
+.cta{background:linear-gradient(90deg,var(--primary),#B4E77A); color:white; padding:28px; border-radius:12px}
+footer{padding:28px 0; color:#666}
+@media(min-width:992px){
+    .hero{padding:72px 0}
+}
+
+/* ============================
+   HERO INFO CARD (giữ nguyên)
+=============================== */
+.hero .info-card,
+.hero .info-card li,
+.hero .info-card p,
+.hero .info-card h5 {
+    color: #212529 !important;
+}
+
+.hero .info-card ul li {
+    margin-bottom: 6px;
+}
+
+
+/* ============================
+   FIX MÀU CHỮ CHO DANH SÁCH TRẮNG NỀN
+   (áp dụng cho khu vực có UL bị chữ trắng)
+=============================== */
+.section-requirements ul,
+.section-requirements ul li {
+    color: #212529 !important; /* màu đen */
+}
+
+.section-requirements ul li {
+    margin-bottom: 6px;
+}
+
+/* CTA Section */
+.cta {
+    background: linear-gradient(90deg, var(--primary), #B4E77A);
+    color: white; /* Mặc định cho toàn bộ nội dung */
+    padding: 28px;
+    border-radius: 12px;
+}
+
+/* Câu hỏi trong CTA */
+.cta h5 {
+    color: #ffd966; /* hoặc #f4d35e để nổi bật trên nền xanh */
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.cta p {
+    color: #ffffffcc; /* chữ trắng hơi mờ, để không quá chói */
+}
+
+/* Button */
+.cta .btn {
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(90deg, rgba(13,59,102,0.95) 0%, rgba(6,34,62,0.85) 100%);
+    color: white; /* mặc định */
+    padding: 56px 0;
+}
+
+/* Hero text */
+.hero .col-lg-7 h1 {
+    color: #f4d35e; /* màu vàng nổi bật trên nền xanh */
+    font-size: 2.5rem; /* tuỳ chỉnh kích thước */
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.hero .col-lg-7 p.lead {
+    color: #ffffffcc; /* chữ trắng hơi mờ */
+    font-size: 1.25rem;
+    margin-top: 0.5rem;
+}

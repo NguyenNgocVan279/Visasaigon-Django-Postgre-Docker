@@ -1,0 +1,74 @@
+{% load static %}
+
+<!-- Spinner Start -->
+<div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-border text-secondary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<!-- Spinner End -->
+
+<!-- Topbar Start -->
+<div class="container-fluid bg-primary px-5 d-none d-lg-block">
+    <div class="row gx-0 align-items-center">
+        <!-- Thông tin liên hệ -->
+        <div class="col-lg-5 text-center text-lg-start mb-lg-0">
+            <div class="d-flex">
+                <a href="#" class="text-muted me-4"><i class="fas fa-envelope text-secondary me-2"></i>{{ profile.email }}</a>
+                <a href="#" class="text-muted me-0"><i class="fas fa-phone-alt text-secondary me-2"></i>{{ profile.hotline }} (có Zalo)</a>
+            </div>
+        </div>
+        <!-- Mạng xã hội -->
+        <div class="col-lg-3 ms-auto text-center mb-2 mb-lg-0">
+            <div class="d-inline-flex align-items-center" style="height: 45px;">
+                <a class="btn btn-sm btn-outline-light btn-square rounded-circle me-2" href="{{ profile.facebook }}"><i class="fab fa-facebook-f fw-normal text-secondary"></i></a>
+                {% comment %} <a class="btn btn-sm btn-outline-light btn-square rounded-circle" href="{{ profile.youtube }}"><i class="fab fa-youtube fw-normal text-secondary"></i></a> {% endcomment %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Topbar End -->
+
+<!-- Navbar & Hero Start -->
+<div class="container-fluid nav-bar p-0">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
+        <a href="{% url 'pages:trang-chu' %}" class="navbar-brand p-0">
+            <h1 class="display-5 text-secondary m-0">
+
+                {% if profile.logo %}
+                    <img src="{{ profile.logo.url }}" class="img-fluid" alt="{{ profile.name }}">
+                {% else %}
+                    <img src="{% static 'images/default-logo.png' %}" class="img-fluid" alt="Logo">
+                {% endif %}
+
+            </h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{% url 'pages:trang-chu' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'trang-chu' %}active{% endif %}">Trang chủ</a>
+                <a href="{% url 'pages:gioi-thieu' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'gioi-thieu' %}active{% endif %}">Giới thiệu</a>
+
+                <div class="nav-item dropdown">
+                    <a href="{% url 'visa:visa-cac-nuoc' %}" class="nav-link {% if request.resolver_match.url_name == 'visa-cac-nuoc' or request.resolver_match.url_name == 'country_detail' %}active{% endif %}" data-bs-toggle="dropdown"><span class="dropdown-toggle">Dịch vụ Visa</span></a>
+                    <div class="dropdown-menu m-0">
+                        {% for c in visa_countries %}
+                        <a href="{% url 'visa:country_detail' c.slug %}" class="dropdown-item">
+                            Giới thiệu Visa {{ c.name }}
+                            <hr>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <a href="{% url 'visa:ho-so-yeu-cau' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'ho-so-yeu-cau' %}active{% endif %}">Hồ sơ yêu cầu</a>
+                <a href="{% url 'clients:dang-ky-lam-visa' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'dang-ky-lam-visa' %}active{% endif %}">Đăng ký dịch vụ</a>
+                <a href="{% url 'pages:lien-he' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'lien-he' %}active{% endif %}">Liên hệ</a>
+            </div>
+            <button class="btn btn-primary btn-md-square border-secondary mb-3 mb-md-3 mb-lg-0 me-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
+        </div>
+    </nav>
+</div>
+<!-- Navbar & Hero End -->

@@ -1,0 +1,124 @@
+{% load static %}
+
+<div class="container-fluid training overflow-hidden bg-light py-5">
+    <div class="container py-5">
+        <div class="section-title text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="sub-style">
+                <h5 class="sub-title text-primary px-3">KẾT QUẢ VISA TIÊU BIỂU CỦA KHÁCH HÀNG</h5>
+            </div>
+            <h1 class="display-5 mb-4">Khám Phá Những Thành Công Của Khách Hàng Cùng Visasaigon.net</h1>
+            <p class="mb-0">
+                Chúng tôi tự hào mang đến những kết quả xuất sắc cho khách hàng qua dịch vụ Visa chuyên nghiệp. 
+                Với sự hỗ trợ tận tâm và quy trình đơn giản, chúng tôi đã giúp hàng nghìn khách hàng đạt được Visa mong muốn. 
+                Hãy cùng xem các câu chuyện thành công từ những khách hàng tiêu biểu của chúng tôi!
+            </p>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Visa Úc -->
+            <div class="col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="training-item">
+                    <div class="training-inner">
+                        <img src="{% static 'theme/img/visa_result.png' %}" class="img-fluid w-100 rounded" alt="Visa 1">
+                    </div>
+                    <div class="training-content bg-secondary rounded-bottom p-4">
+                        <a href="#"><h4 class="text-white">Kết quả Visa Úc</h4></a>
+                        <p class="text-white-50">
+                            Khách hàng đã hoàn tất thủ tục xin visa Úc với sự hỗ trợ tận tình từ Visasaigon.net. 
+                            Quy trình đơn giản và nhanh chóng, giúp khách hàng đạt được mục tiêu của mình.
+                        </p>
+                        <a class="btn btn-secondary rounded-pill text-white p-0" href="#">Xem Ảnh <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visa Mỹ -->
+            <div class="col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="training-item">
+                    <div class="training-inner">
+                        <img src="{% static 'theme/img/visa_result.png' %}" class="img-fluid w-100 rounded" alt="Visa 2">
+                    </div>
+                    <div class="training-content bg-secondary rounded-bottom p-4">
+                        <a href="#"><h4 class="text-white">Kết quả Visa Mỹ</h4></a>
+                        <p class="text-white-50">
+                            Thành công trong việc xin Visa Mỹ nhờ vào sự hỗ trợ chuyên nghiệp của đội ngũ Visasaigon.net. 
+                            Quy trình xin visa dễ dàng và nhanh chóng.
+                        </p>
+                        <a class="btn btn-secondary rounded-pill text-white p-0" href="#">Xem Ảnh <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visa Canada -->
+            <div class="col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="training-item">
+                    <div class="training-inner">
+                        <img src="{% static 'theme/img/visa_result.png' %}" class="img-fluid w-100 rounded" alt="Visa 3">
+                    </div>
+                    <div class="training-content bg-secondary rounded-bottom p-4">
+                        <a href="#"><h4 class="text-white">Kết quả Visa Canada</h4></a>
+                        <p class="text-white-50">
+                            Đạt được Visa Canada nhờ vào dịch vụ hỗ trợ chu đáo của Visasaigon.net, giúp khách hàng 
+                            có thể du lịch và công tác thuận lợi tại Canada.
+                        </p>
+                        <a class="btn btn-secondary rounded-pill text-white p-0" href="#">Xem Ảnh <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visa Châu Âu -->
+            <div class="col-lg-6 col-xl-3 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="training-item">
+                    <div class="training-inner">
+                        <img src="{% static 'theme/img/visa_result.png' %}" class="img-fluid w-100 rounded" alt="Visa 4">
+                    </div>
+                    <div class="training-content bg-secondary rounded-bottom p-4">
+                        <a href="#"><h4 class="text-white">Kết quả Visa Châu Âu</h4></a>
+                        <p class="text-white-50">
+                            Visasaigon.net hỗ trợ thành công trong việc xin Visa Châu Âu, giúp khách hàng có cơ hội 
+                            trải nghiệm vẻ đẹp kỳ vỹ trên toàn bộ các nước khối Schengen.
+                        </p>
+                        <a class="btn btn-secondary rounded-pill text-white p-0" href="#">Xem Ảnh <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Xem tất cả -->
+            <div class="col-12 text-center">
+                <a class="btn btn-primary border-secondary rounded-pill py-3 px-5 wow fadeInUp" data-wow-delay="0.1s" href="#">Xem tất cả</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel">Ảnh Visa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="modalImage" src="" class="img-fluid w-100" alt="Visa Image">
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+    // Lắng nghe sự kiện khi người dùng nhấp vào nút "Xem ảnh"
+    const xemAnhButtons = document.querySelectorAll('.btn.btn-secondary');
+    
+    xemAnhButtons.forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        const imageSrc = this.closest('.training-item').querySelector('img').src;
+        document.getElementById('modalImage').src = imageSrc;
+        const myModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        myModal.show();
+      });
+    });
+</script>

@@ -30,9 +30,9 @@ class ClientAdmin(admin.ModelAdmin):
 # ============================================================
 @admin.register(Application)
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ("id", "client", "visa_type", "travel_alone", "created_at")
+    list_display = ("id", "client", "visa_type", "solo_or_group_travel", "created_at")
     search_fields = ("client__first_name", "client__last_name")
-    list_filter = ("visa_type", "travel_alone", "created_at")
+    list_filter = ("visa_type", "solo_or_group_travel", "created_at")
     autocomplete_fields = ("client", "visa_type")
 
 

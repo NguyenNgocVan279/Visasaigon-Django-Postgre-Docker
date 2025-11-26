@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Gửi thông tin hồ sơ xin visa{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'clients/application_form.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5 wow fadeIn" data-wow-duration="0.6s">
+
+    <div class="card shadow-lg border-0 rounded-4 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="card-body p-4 p-md-5">
+
+            <!-- TITLE -->
+            <h2 class="fw-bold text-primary mb-4 text-center wow fadeInDown" data-wow-delay="0.2s">
+                GỬI THÔNG TIN & GIẤY TỜ CẦN THIẾT <br>
+                (<span class="application-star">*</span> bắt buộc)
+            </h2>
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- ============================= -->
+                <!-- 1. THÔNG TIN CÁ NHÂN -->
+                <!-- ============================= -->
+                <div class="mb-4">
+                    <h4 class="fw-bold border-start border-4 border-primary ps-3 mb-3 wow fadeInLeft"
+                        data-wow-delay="0.15s">
+                        1. Thông tin cá nhân <span class="application-star">*</span>
+                    </h4>
+
+                    <div class="row g-3">
+                        {% for field in client_form %}
+                        <div class="col-md-6 wow fadeInUp"
+                             data-wow-delay="0.{{ forloop.counter }}s">
+                            <label class="form-label fw-semibold">
+                                {{ field.label }}
+                                {% if field.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- ============================= -->
+                <!-- 2. THÔNG TIN CHUYẾN ĐI -->
+                <!-- ============================= -->
+                <div class="mb-4">
+
+                    <h4 class="fw-bold border-start border-4 border-primary ps-3 mb-3 wow fadeInLeft"
+                        data-wow-delay="0.15s">
+                        2. Thông tin chuyến đi & thân nhân (tuỳ chọn)
+                    </h4>
+
+                    <div class="row g-3">
+
+                        {% for field in app_form %}
+
+                            {% if field.name == "solo_or_group_travel" %}
+                            <!-- Custom Radio -->
+                            <div class="col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+
+                                <label class="form-label fw-semibold">{{ field.label }}</label>
+
+                                {% for radio in field %}
+                                    <div class="form-check">
+                                        {{ radio.tag }}
+                                        <label class="form-check-label">{{ radio.choice_label }}</label>
+                                    </div>
+                                {% endfor %}
+
+                                {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            {% elif field.name not in "inviter_full_name inviter_dob inviter_address inviter_phone inviter_email" %}
+                            <div class="col-md-6 wow fadeInUp"
+                                 data-wow-delay="0.{{ forloop.counter }}s">
+
+                                <label class="form-label fw-semibold">{{ field.label }}</label>
+                                {{ field }}
+
+                                {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- ============================= -->
+                <!-- 3. THÔNG TIN NGƯỜI MỜI -->
+                <!-- ============================= -->
+                <div class="mb-4">
+
+                    <h4 class="fw-bold border-start border-4 border-primary ps-3 mb-3 wow fadeInLeft"
+                        data-wow-delay="0.15s">
+                        3. Thông tin người mời (tuỳ chọn)
+                    </h4>
+
+                    <div class="row g-3">
+
+                        {% for field in app_form %}
+                            {% if field.name in "inviter_full_name inviter_dob inviter_address inviter_phone inviter_email" %}
+                            <div class="col-md-6 wow fadeInUp"
+                                 data-wow-delay="0.{{ forloop.counter }}s">
+
+                                <label class="form-label fw-semibold">{{ field.label }}</label>
+                                {{ field }}
+
+                                {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- ============================= -->
+                <!-- 4. UPLOAD GIẤY TỜ -->
+                <!-- ============================= -->
+                <div class="mb-4">
+
+                    <h4 class="fw-bold border-start border-4 border-primary ps-3 mb-3 wow fadeInLeft"
+                        data-wow-delay="0.15s">
+                        4. Tải lên giấy tờ (tuỳ chọn)
+                    </h4>
+
+                    {{ file_formset.management_form }}
+
+                    <div class="table-responsive wow fadeInUp" data-wow-delay="0.2s">
+                        <table class="table table-bordered align-middle" id="file-upload-table">
+                            <thead class="table-light">
+                                <tr class="text-center">
+                                    <th style="width: 30%">Loại giấy tờ</th>
+                                    <th style="width: 60%">Upload file</th>
+                                    <th style="width: 10%">Xóa</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for form in file_formset %}
+                                <tr class="wow fadeInUp"
+                                    data-wow-delay="0.{{ forloop.counter }}s">
+
+                                    <td>{{ form.file_type }}</td>
+                                    <td>{{ form.file }}</td>
+                                    <td class="text-center">{{ form.DELETE }}</td>
+                                </tr>
+
+                                {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                {% endfor %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-3 wow zoomIn"
+                         data-wow-delay="0.25s">
+                        <button type="button" class="btn btn-success btn-sm" id="add-file-row">
+                            <i class="bi bi-plus-circle"></i> Thêm dòng
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <!-- SUBMIT -->
+                <div class="text-center mt-4 wow fadeInUp" data-wow-delay="0.2s">
+                    <button class="btn btn-primary btn-lg px-5 py-2 rounded-pill shadow-sm pulse-soft">
+                        Gửi hồ sơ
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'clients/application_form_add_upload_line.js' %}"></script>
+{% endblock %}

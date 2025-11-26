@@ -61,7 +61,7 @@ services:
       - visasaigon_network
 
 # =======================
-# 3️⃣ Volume định danh (dữ liệu PostgreSQL)
+# 3️ Volume định danh (dữ liệu PostgreSQL)
 # =======================
 volumes:
   visasaigon_postgres_data:

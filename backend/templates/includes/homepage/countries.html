@@ -1,0 +1,51 @@
+{% load static %}
+
+<div class="container-fluid country overflow-hidden py-5">
+    <div class="container">
+        <div class="section-title text-center wow fadeInUp" data-wow-delay="0.1s" style="margin-bottom: 70px;">
+            <div class="sub-style">
+                <h5 class="sub-title text-primary px-3">Các Quốc Gia Chúng Tôi Hỗ Trợ Dịch Vụ Visa</h5>
+            </div>
+            <h1 class="display-5 mb-4">Dịch vụ Visa theo các Quốc gia</h1>
+            <p class="mb-0">
+                Chúng tôi tự hào cung cấp dịch vụ visa chuyên nghiệp và tận tâm đến các quốc gia trên thế giới.
+                Với kinh nghiệm dày dặn và đội ngũ chuyên viên giàu kiến thức, chúng tôi cam kết mang đến giải pháp
+                tối ưu và nhanh chóng cho hành trình của bạn. Hãy để chúng tôi đồng hành cùng bạn chinh phục 
+                những chân trời mới!
+            </p>
+        </div>
+
+        <!-- Countries -->
+        <div class="row g-4 text-center">
+            {% for c in visa_countries %}
+            <div class="col-lg-6 col-xl-3 mb-5 wow fadeInUp" data-wow-delay="0.1s">
+                
+                <!-- Wrapper Link -->
+                <a href="{% url 'visa:country_detail' c.slug %}" class="country-link-wrapper">
+
+                    <div class="country-item">
+                        <div class="rounded overflow-hidden">
+                            {% if c.cover_image %}
+                            <img src="{{ c.cover_image.url }}" class="img-fluid w-100 rounded" alt="Image">
+                            {% endif %}
+                        </div>
+
+                        <div class="country-flag mt-3">
+                            {% if c.flag_image %}
+                            <img src="{{ c.flag_image.url }}" class="img-fluid rounded-circle" alt="Image">
+                            {% endif %}
+                        </div>
+
+                        <div class="country-name text-white mt-3 fs-4">
+                            Visa {{ c.name }}
+                        </div>
+                    </div>
+
+                </a>
+                <!-- End Wrapper Link -->
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

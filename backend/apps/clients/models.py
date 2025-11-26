@@ -1,6 +1,7 @@
 from django.db import models
 from apps.core_app.models import TimeStampedModel
 from apps.visa.models import VisaType
+from .utils import application_file_upload_path
 
 
 # ============================================================
@@ -9,8 +10,8 @@ from apps.visa.models import VisaType
 class Client(TimeStampedModel):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=50)
     email = models.EmailField(blank=True, null=True)
-    phone = models.CharField(max_length=50, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
 
     def __str__(self):
@@ -27,31 +28,38 @@ class Client(TimeStampedModel):
 # ============================================================
 class Application(TimeStampedModel):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="applications")
-    visa_type = models.ForeignKey(VisaType, on_delete=models.SET_NULL, null=True)
+    visa_type = models.ForeignKey(VisaType, on_delete=models.SET_NULL, blank=True, null=True)
 
     # -------- Travel info --------
-    travel_alone = models.BooleanField(default=True)
-    travel_history_countries = models.TextField(
+    SOLO_OR_GROUP_CHOICES = [
+        ('solo', 'Đi một mình'),
+        ('group', 'Đi theo nhóm / gia đình'),
+    ]
+    solo_or_group_travel = models.CharField(
+        max_length=20,
+        choices=SOLO_OR_GROUP_CHOICES,
+        default='solo',
+        verbose_name="Đi một mình hay theo nhóm"
+    )
+    
+    travel_history_countries = models.CharField(max_length=255, blank=True, null=True)
+    
+    # -------- Family members --------
+    family_members = models.TextField(
         blank=True,
         null=True,
-        help_text="Ví dụ: Singapore, Malaysia, Thailand"
-    )
-
-    # -------- Family members (JSONField) --------
-    family_members = models.JSONField(
-        blank=True,
-        default=list,
-        help_text="Danh sách thân nhân: [{'full_name':'','dob':'','current_address':'','relation':''}, ...]"
     )
 
     # -------- Occupation --------
     OCCUPATION_CHOICES = [
         ('business_owner', 'Chủ DN / Tự doanh'),
         ('employee', 'Nhân viên công ty'),
+        ('freelance', 'Lao động tự do'),
         ('retired', 'Đã nghỉ hưu'),
         ('homemaker', 'Nội trợ'),
         ('student', 'Sinh viên'),
         ('pupil', 'Học sinh'),
+        ('other', 'Khác'),
     ]
     occupation = models.CharField(max_length=50, choices=OCCUPATION_CHOICES, blank=True, null=True)
 
@@ -84,10 +92,18 @@ class ApplicationFile(TimeStampedModel):
         ('other', 'Giấy tờ khác'),
     ]
 
-    application = models.ForeignKey(Application, on_delete=models.CASCADE, related_name="files")
-    file_type = models.CharField(max_length=50, choices=FILE_TYPE_CHOICES)
-    file = models.FileField(upload_to='uploads/%Y/%m/%d/')
+    application = models.ForeignKey(
+        "clients.Application",
+        on_delete=models.CASCADE,
+        related_name="files"
+    )
+
     client_name = models.CharField(max_length=255, blank=True, null=True)
+
+    file_type = models.CharField(max_length=50, choices=FILE_TYPE_CHOICES)
+
+    # Hàm upload custom
+    file = models.FileField(upload_to=application_file_upload_path)
 
     def save(self, *args, **kwargs):
         if self.application:
@@ -101,3 +117,4 @@ class ApplicationFile(TimeStampedModel):
         ordering = ["-created_at"]
         verbose_name = "Application File"
         verbose_name_plural = "Application Files"
+

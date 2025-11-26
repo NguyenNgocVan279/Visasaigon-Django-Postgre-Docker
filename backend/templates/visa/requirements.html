@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Yêu cầu hồ sơ visa{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'visa/visa_requirements.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4 text-primary fw-bold">Tra cứu yêu cầu hồ sơ</h2>
+
+    <form method="GET" action="{% url 'visa:ho-so-yeu-cau' %}" class="row g-3">
+
+        <!-- COUNTRY -->
+        <div class="col-md-6">
+            <label class="form-label">
+                Chọn quốc gia <span class="required-star">*</span>
+            </label>
+            <select name="country" class="form-select" onchange="this.form.submit()">
+                <option value="">-- Chọn quốc gia --</option>
+                {% for c in countries %}
+                    <option value="{{ c.id }}" {% if selected_country|stringformat:'s' == c.id|stringformat:'s' %}selected{% endif %}>
+                        {{ c.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- VISA TYPE -->
+        <div class="col-md-6">
+            <label class="form-label">
+                Loại visa <span class="required-star">*</span>
+            </label>
+            <select name="visa_type" class="form-select" {% if not visa_types %}disabled{% endif %} onchange="this.form.submit()">
+                <option value="">-- Chọn loại visa --</option>
+                {% if visa_types %}
+                    {% for v in visa_types %}
+                        <option value="{{ v.id }}" {% if selected_visa_type|stringformat:'s' == v.id|stringformat:'s' %}selected{% endif %}>
+                            {{ v.name }} ({{ v.get_purpose_display }})
+                        </option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+    </form>
+
+    <hr class="my-4">
+
+    <!-- RESULT -->
+    {% if documents %}
+        <a href="#documents-list" class="btn btn-primary btn-doc mb-3">
+            📄 Danh sách hồ sơ cần có:
+        </a>
+        <ul class="list-group">
+            {% for doc in documents %}
+                <li class="list-group-item">
+                    <strong class="text-muted">{{ doc.name }}</strong><br>
+                    <small>{{ doc.description }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif selected_country and selected_visa_type %}
+        <div class="alert alert-warning mt-3">
+            Vui lòng chọn Loại Visa.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

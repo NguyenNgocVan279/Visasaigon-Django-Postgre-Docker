@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Nộp hồ sơ thành công{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="card shadow p-4">
+        <h2 class="text-success fw-bold mb-3">✅ Hồ sơ của bạn đã được gửi thành công!</h2>
+        <p>Cảm ơn bạn đã sử dụng dịch vụ Visa của chúng tôi. Chúng tôi sẽ liên hệ với bạn sớm nhất.</p>
+        <a href="{% url 'clients:dang-ky-lam-visa' %}" class="btn btn-primary mt-3">Bổ sung hồ sơ khác</a>
+        <a href="{% url 'pages:trang-chu' %}" class="btn btn-secondary mt-3">Về trang chủ</a>
+    </div>
+</div>
+{% endblock %}

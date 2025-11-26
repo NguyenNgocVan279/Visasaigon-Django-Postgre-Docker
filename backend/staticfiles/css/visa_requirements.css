@@ -1,0 +1,75 @@
+/* ===========================
+   Visa Requirements Page CSS
+=========================== */
+
+/* Form và select */
+.form-label {
+    font-weight: 600;
+    color: #1e3a8a; /* Xanh đậm */
+}
+
+.form-select {
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #3b82f6; /* xanh sáng */
+    box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+}
+
+/* Tiêu đề chính */
+h2 {
+    font-size: 2rem;
+    color: #1e40af;
+}
+
+/* Form container shadow */
+form {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Kết quả hồ sơ */
+.list-group-item {
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+    transition: all 0.2s;
+}
+
+.list-group-item:hover {
+    background-color: #e0f2fe;
+    transform: translateY(-2px);
+}
+
+/* Tên document */
+.list-group-item strong {
+    font-size: 1.1rem;
+    color: #1e40af;
+}
+
+/* Description */
+.list-group-item small {
+    display: block;
+    margin-top: 0.5rem;
+    white-space: pre-line; /* giữ xuống dòng */
+    line-height: 1.5;
+}
+
+/* Alert */
+.alert {
+    border-radius: 0.5rem;
+    font-weight: 500;
+}
+
+/* Ngôi sao màu nổi bật cho các label bắt buộc */
+.required-star {
+    color: #f43f5e; /* đỏ nổi bật */
+    font-weight: bold;
+    margin-left: 0.2rem;
+}

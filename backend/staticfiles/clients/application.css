@@ -1,0 +1,35 @@
+label.form-label {
+    font-weight: 600;
+    color: #444;
+}
+
+.card {
+    border-radius: 10px;
+    background: #fafafa;
+}
+
+input[type="file"] {
+    background: #fff;
+    padding: 10px;
+}
+
+.btn-primary {
+    font-weight: 600;
+}
+
+textarea.placeholder-style::placeholder {
+    font-size: 0.85rem;      /* cỡ chữ nhỏ hơn */
+    font-style: italic;       /* in nghiêng */
+    color: #6c757d;           /* màu mờ, Bootstrap gray-600 */
+}
+
+/* Ngôi sao màu nổi bật cho các label bắt buộc */
+.application-star {
+    color: #f43f5e; /* đỏ nổi bật */
+    font-weight: bold;
+    margin-left: 0.2rem;
+}
+
+table td:first-child {
+    min-width: 150px; /* Loại giấy tờ */
+}

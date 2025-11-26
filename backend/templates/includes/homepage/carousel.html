@@ -1,0 +1,88 @@
+{% load static %}
+
+<div class="carousel-header">
+    <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
+
+        <ol class="carousel-indicators">
+            <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#carouselId" data-bs-slide-to="1"></li>
+        </ol>
+
+        <div class="carousel-inner" role="listbox">
+
+            <!-- Slide 1 -->
+            <div class="carousel-item active">
+                <img src="{% static 'theme/img/cover_image_australia.jpg' %}" class="img-fluid" alt="Image">
+
+                <div class="carousel-caption">
+                    <div class="text-center p-4" style="max-width: 900px;">
+
+                        <h4 class="text-white text-uppercase fw-bold mb-3 mb-md-4 wow fadeInUp" data-wow-delay="0.1s">
+                            Giải pháp cho tất cả <br> các loại Visa
+                        </h4>
+
+                        <h1 class="display-1 text-capitalize text-muted mb-3 mb-md-4 wow fadeInUp" data-wow-delay="0.3s">
+                            Quá trình di chuyển bắt đầu từ đây!
+                        </h1>
+
+                        <p class="text-white mb-4 mb-md-5 fs-5 wow fadeInUp" data-wow-delay="0.5s">
+                            Chúng tôi cung cấp các dịch vụ tư vấn và hỗ trợ làm visa chuyên nghiệp, giúp bạn dễ dàng
+                            vượt qua các thủ tục hành chính và đạt được mục tiêu di chuyển...
+                        </p>
+
+                        <a class="btn btn-primary border-secondary rounded-pill text-white py-3 px-5 wow fadeInUp"
+                           data-wow-delay="0.7s"
+                           href="{% url 'visa:visa-cac-nuoc' %}">
+                            Xem chi tiết
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <img src="{% static 'theme/img/cover_image_usa.jpg' %}" class="img-fluid" alt="Image">
+
+                <div class="carousel-caption">
+                    <div class="text-center p-4" style="max-width: 900px;">
+
+                        <h5 class="text-white text-uppercase fw-bold mb-3 mb-md-4 wow fadeInUp" data-wow-delay="0.1s">
+                            Giải pháp cho tất cả các loại Visa
+                        </h5>
+
+                        <h1 class="display-1 text-capitalize text-muted mb-3 mb-md-4 wow fadeInUp" data-wow-delay="0.3s">
+                            Tư vấn chi tiết, tận tâm!
+                        </h1>
+
+                        <p class="text-white mb-4 mb-md-5 fs-5 wow fadeInUp" data-wow-delay="0.5s">
+                            Chúng tôi cung cấp dịch vụ visa chuyên nghiệp, giúp bạn dễ dàng hoàn tất các thủ tục...
+                        </p>
+
+                        <a class="btn btn-primary border-secondary rounded-pill text-white py-3 px-5 wow fadeInUp"
+                           data-wow-delay="0.7s"
+                           href="{% url 'visa:visa-cac-nuoc' %}">
+                            Xem chi tiết
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-secondary wow fadeInLeft"
+                  data-wow-delay="0.2s" aria-hidden="false"></span>
+            <span class="visually-hidden-focusable">Previous</span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-secondary wow fadeInRight"
+                  data-wow-delay="0.2s" aria-hidden="false"></span>
+            <span class="visually-hidden-focusable">Next</span>
+        </button>
+
+    </div>
+</div>
