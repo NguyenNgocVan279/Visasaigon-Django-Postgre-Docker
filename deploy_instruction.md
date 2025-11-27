@@ -106,13 +106,17 @@ Bạn có cấu trúc visasaigon-django-postgre-docker/ như mô tả. Ta cần:
     🎊BẮT BUỘC
         DEPLOY_HOST — IP hoặc hostname VPS
         DEPLOY_USER — deploy
-        DEPLOY_SSH_KEY — private key (nội dung của ~/.ssh/ionos_deploy, copy paste)
+        DEPLOY_SSH_KEY — private key (nội dung của ~/.ssh/ionos_deploy, copy paste - là file private key trên laptop)
         DEPLOY_PORT — (mặc định 22) nếu khác
         ENV_PROD — (tùy chọn) nội dung file .env.prod (nếu bạn muốn workflow tạo file env trên server). Lưu ý: để an toàn, bạn có thể lưu các biến riêng lẻ thay vì 1 blob.
     🎊TÙY CHỌN (nếu dùng Docker registry)
         REGISTRY_USER, REGISTRY_PASSWORD, REGISTRY_URL — nếu bạn build & push image tới registry riêng.
 
-
+🎉 Phần C — Chiến lược deploy CI/CD:
+Có 2 cách chính:
+A. Build & deploy trên VPS bằng Git pull (ít phức tạp): workflow SSH tới server → git -C /srv/backend pull → docker compose -f docker-compose.prod.yml pull → docker compose -f docker-compose.prod.yml up -d --build --remove-orphans.
+B. Build image trong Actions, push vào registry → trên server docker compose pull → up. (ít network và nhanh hơn khi nhiều server)
+Mình sẽ cung cấp mẫu workflow cho phương án A (nhiều bạn dùng) vì đơn giản, không cần registry.
 
 
 

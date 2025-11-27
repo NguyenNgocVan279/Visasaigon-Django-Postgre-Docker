@@ -3,10 +3,20 @@ import os
 
 DEBUG = False
 
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]  # bắt buộc trong prod
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",") or ["yourdomain.com"]
+# -----------------------------------------------------------------------------
+# SECRET KEY & HOSTS
+# -----------------------------------------------------------------------------
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]  # bắt buộc có trong .env.prod
 
-# Example Postgres settings in prod (từ env)
+# ALLOWED_HOSTS từ biến môi trường (phân tách dấu phẩy)
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
+# Loại bỏ chuỗi rỗng (trường hợp env rỗng)
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()] or ["localhost"]
+
+
+# -----------------------------------------------------------------------------
+# DATABASE - PostgreSQL
+# -----------------------------------------------------------------------------
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -18,10 +28,60 @@ DATABASES = {
     }
 }
 
-# Security hardening
+
+# -----------------------------------------------------------------------------
+# STATIC & MEDIA (phục vụ bởi Nginx)
+# -----------------------------------------------------------------------------
+STATIC_URL = "/static/"
+MEDIA_URL = "/media/"
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")  # nơi collectstatic
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")    # lưu uploads
+
+
+# -----------------------------------------------------------------------------
+# SECURITY HARDENING
+# -----------------------------------------------------------------------------
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Cookie HTTPS (Nginx giữ SSL, Gunicorn nhận HTTP)
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-# Static/Media settings might point to S3 in prod, hoặc collectstatic -> STATIC_ROOT
+# Django biết request gốc là HTTPS
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+
+# -----------------------------------------------------------------------------
+# LOGGING PRODUCTION
+# -----------------------------------------------------------------------------
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+
+    "formatters": {
+        "verbose": {
+            "format": "[{levelname}] {asctime} {name} — {message}",
+            "style": "{",
+        },
+    },
+
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": os.path.join(BASE_DIR, "logs", "django.log"),
+            "formatter": "verbose",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+    },
+
+    "root": {
+        "handlers": ["file", "console"],
+        "level": "INFO",
+    },
+}

@@ -1,0 +1,59 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [ "main" ]   # Deploy mỗi khi push lên main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # -------------------------------------------
+    # 1) Lấy code
+    # -------------------------------------------
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # -------------------------------------------
+    # 2) Tạo SSH private key để login vào VPS
+    # -------------------------------------------
+    - name: Set up SSH key
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+    # -------------------------------------------
+    # 3) Thêm VPS vào known_hosts
+    # -------------------------------------------
+    - name: Add VPS to known_hosts
+      run: ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+
+    # -------------------------------------------
+    # 4) Copy file .env.prod lên VPS
+    #    -> vào đúng backend/.env.prod
+    # -------------------------------------------
+    - name: Upload .env.prod to server
+      run: |
+        ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "mkdir -p ~/visasaigon/backend"
+        echo "${{ secrets.ENV_PROD }}" | ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "cat > ~/visasaigon/backend/.env.prod"
+
+    # -------------------------------------------
+    # 5) Sync toàn bộ project lên VPS (TRỪ .git)
+    # -------------------------------------------
+    - name: Upload project to VPS
+      run: |
+        rsync -avz --exclude '.git/' --exclude '__pycache__/' ./ \
+        ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:~/visasaigon/
+
+    # -------------------------------------------
+    # 6) Deploy trên VPS
+    # -------------------------------------------
+    - name: Run docker compose on server
+      run: |
+        ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          cd ~/visasaigon
+          docker compose -f docker-compose.prod.yml down
+          docker compose -f docker-compose.prod.yml build
+          docker compose -f docker-compose.prod.yml up -d
+        EOF
