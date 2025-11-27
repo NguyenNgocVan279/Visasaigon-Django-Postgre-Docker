@@ -9,7 +9,7 @@ DEBUG = False
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]  # bắt buộc có trong .env.prod
 
 # ALLOWED_HOSTS từ biến môi trường (phân tách dấu phẩy)
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
 # Loại bỏ chuỗi rỗng (trường hợp env rỗng)
 ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()] or ["localhost"]
 
