@@ -1,0 +1,45 @@
+visasaigon-django-postgre-docker
+├── backend/
+    │
+    ├── apps/                          ← toàn bộ Django apps
+    │   ├── accounts/
+    │   ├── visa/
+    │   └── clients/
+    │
+    ├── config/                       ← Django project root
+    │   ├── __init__.py
+    │   ├── asgi.py
+    │   ├── wsgi.py
+    │   ├── urls.py
+    │   └── settings/
+    │       ├── __init__.py
+    │       ├── base.py
+    │       ├── dev.py
+    │       ├── prod.py
+    │       └── logging.py             ← cấu hình logging riêng
+    │
+    docker/                            ← cấu hình deploy
+    │   ├── gunicorn.conf.py
+    │   ├── nginx.conf
+    │   └── entrypoint.sh
+    │
+    ├── requirements/
+    │   ├── base.txt
+    │   ├── dev.txt
+    │   └── prod.txt
+    │
+    ├── static/                        ← collectstatic (prod)
+    ├── media/                         ← user uploads
+    ├── logs/
+    │   └── django.log
+    │
+    ├── Dockerfile                     ← dev
+    ├── Dockerfile.prod                ← prod multi-stage
+    ├── .env                           ← development env
+    ├── .env.prod                      ← production env
+    ├── .env.example                   ← mẫu commit
+    │
+    ├── .gitignore
+    └── manage.py
+├── docker-compose.yml             ← dev
+├── docker-compose.prod.yml        ← prod

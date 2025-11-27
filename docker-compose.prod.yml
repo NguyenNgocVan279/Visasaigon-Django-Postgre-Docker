@@ -1,0 +1,97 @@
+# ==============================
+# docker-compose.prod.yml
+# Môi trường phát triển Django + PostgreSQL
+# Chuẩn production-ready (bảo mật .env.prod, port tách biệt)
+# ==============================
+
+version: '3.9'
+
+services:
+  # =======================
+  # 1️⃣ PostgreSQL Service
+  # Need to log in to Docker Hub to pull postgres:15
+  # =======================
+  db:
+    image: postgres:15
+    container_name: visasaigon_db
+    restart: always
+    env_file:
+      - ./backend/.env.prod
+    # environment:
+    #   # Các biến được lấy từ .env.prod (an toàn hơn hard-code)
+    #   POSTGRES_DB: ${POSTGRES_DB}
+    #   POSTGRES_USER: ${POSTGRES_USER}
+    #   POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+    volumes:
+      # Lưu dữ liệu DB vào volume riêng (persistent)
+      - visasaigon_postgres_data:/var/lib/postgresql/data
+    ports:
+      # Port mapping: host:container
+      # 5433 bên ngoài → 5432 bên trong container
+      - "5433:5432"
+    networks:
+      - visasaigon_network
+
+  # =======================
+  # 2️⃣ Django Web Service
+  # =======================
+  web:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    image: visasaigon_image
+    container_name: visasaigon_web
+    restart: always
+    command: sh /app/docker/entrypoint.sh
+    volumes:
+      # Mount toàn bộ project từ host vào container
+      # - .:/app # mount code dev trực tiếp
+      - ./backend:/app
+    ports:
+      # Port web: host 8000 → container 8000
+      - "8001:8000"
+    env_file:
+      - ./backend/.env.prod
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.prod
+    depends_on:
+      - db
+    networks:
+      - visasaigon_network
+
+# =======================
+  # 3️⃣ NGINX Reverse Proxy + HTTPS
+  # =======================
+  nginx:
+    image: nginx:latest
+    container_name: visasaigon_nginx
+    restart: always
+    depends_on:
+      - web
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # Mount file cấu hình nginx
+      - ./nginx/conf.d:/etc/nginx/conf.d
+
+      # Proxy SSL (certbot sẽ dùng thư mục này)
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+
+    networks:
+      - visasaigon_network
+
+# =======================
+# 4️⃣ Volume định danh (dữ liệu PostgreSQL)
+# =======================
+volumes:
+  visasaigon_postgres_data:
+
+# =======================
+# 5️⃣ Network nội bộ giữa web & db
+# =======================
+networks:
+  visasaigon_network:
+    driver: bridge
