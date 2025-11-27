@@ -13,6 +13,9 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "").split(",")
 # Loại bỏ chuỗi rỗng (trường hợp env rỗng)
 ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()] or ["localhost"]
 
+# IMPORTANT
+STATICFILES_DIRS = []  # disable STATICFILES_DIRS for production
+
 
 # -----------------------------------------------------------------------------
 # DATABASE - PostgreSQL
