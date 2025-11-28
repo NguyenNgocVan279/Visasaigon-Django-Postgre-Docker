@@ -2,58 +2,60 @@ name: Deploy to VPS
 
 on:
   push:
-    branches: [ "main" ]   # Deploy mỗi khi push lên main
+    branches: [ "main" ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # -------------------------------------------
-    # 1) Lấy code
-    # -------------------------------------------
+
+    # 1) Checkout
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # -------------------------------------------
-    # 2) Tạo SSH private key để login vào VPS
-    # -------------------------------------------
+    # 2) SSH key
     - name: Set up SSH key
       uses: webfactory/ssh-agent@v0.7.0
       with:
         ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
 
-    # -------------------------------------------
-    # 3) Thêm VPS vào known_hosts
-    # -------------------------------------------
+    # 3) Add VPS known_hosts
     - name: Add VPS to known_hosts
       run: ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
-    # -------------------------------------------
-    # 4) Copy file .env.prod lên VPS
-    #    -> vào đúng backend/.env.prod
-    # -------------------------------------------
+    # 4) Upload .env.prod
     - name: Upload .env.prod to server
       run: |
         ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "mkdir -p ~/visasaigon/backend"
         echo "${{ secrets.ENV_PROD }}" | ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "cat > ~/visasaigon/backend/.env.prod"
 
-    # -------------------------------------------
-    # 5) Sync toàn bộ project lên VPS (TRỪ .git)
-    # -------------------------------------------
+    # 5) Rsync code (xóa file cũ)
     - name: Upload project to VPS
       run: |
-        rsync -avz --exclude '.git/' --exclude '__pycache__/' ./ \
-        ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:~/visasaigon/
+        rsync -avz \
+          --exclude '.git/' \
+          --exclude '__pycache__/' \
+          --delete \
+          ./ \
+          ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:~/visasaigon/
 
-    # -------------------------------------------
-    # 6) Deploy trên VPS
-    # -------------------------------------------
-    - name: Run docker compose on server
+    # 6) Deploy with zero downtime
+    - name: Deploy on VPS
       run: |
         ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          set -e
           cd ~/visasaigon
-          docker compose -f docker-compose.prod.yml down
+
+          echo "==> Pulling latest containers"
+          docker compose -f docker-compose.prod.yml pull || true
+
+          echo "==> Building containers"
           docker compose -f docker-compose.prod.yml build
-          docker compose -f docker-compose.prod.yml up -d
+
+          echo "==> Bringing up containers (zero downtime)"
+          docker compose -f docker-compose.prod.yml up -d --remove-orphans
+
+          echo "==> Cleanup old images"
+          docker image prune -af || true
         EOF

@@ -6,16 +6,20 @@ DEBUG = False
 # -----------------------------------------------------------------------------
 # SECRET KEY & HOSTS
 # -----------------------------------------------------------------------------
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]  # bắt buộc có trong .env.prod
+SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
-# ALLOWED_HOSTS từ biến môi trường (phân tách dấu phẩy)
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
-# Loại bỏ chuỗi rỗng (trường hợp env rỗng)
-ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()] or ["localhost"]
+ALLOWED_HOSTS = [
+    host.strip() for host in os.environ.get("ALLOWED_HOSTS", "").split(",")
+    if host.strip()
+] or ["localhost"]
 
-# IMPORTANT
-STATICFILES_DIRS = []  # disable STATICFILES_DIRS for production
+# CSRF Trusted Origins (bắt buộc)
+CSRF_TRUSTED_ORIGINS = [
+    "https://visasaigon.net",
+    "https://www.visasaigon.net",
+]
 
+STATICFILES_DIRS = []  # production không dùng STATICFILES_DIRS
 
 # -----------------------------------------------------------------------------
 # DATABASE - PostgreSQL
@@ -31,16 +35,14 @@ DATABASES = {
     }
 }
 
-
 # -----------------------------------------------------------------------------
-# STATIC & MEDIA (phục vụ bởi Nginx)
+# STATIC & MEDIA - served by Nginx
 # -----------------------------------------------------------------------------
 STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")  # nơi collectstatic
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")    # lưu uploads
-
+STATIC_ROOT = "/vol/static"
+MEDIA_ROOT = "/vol/media"
 
 # -----------------------------------------------------------------------------
 # SECURITY HARDENING
@@ -48,43 +50,31 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")    # lưu uploads
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
-# Cookie HTTPS (Nginx giữ SSL, Gunicorn nhận HTTP)
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-# Django biết request gốc là HTTPS
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+# HSTS – chỉ bật khi đã chạy HTTPS ổn định
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
 
 # -----------------------------------------------------------------------------
-# LOGGING PRODUCTION
+# LOGGING - Docker friendly
 # -----------------------------------------------------------------------------
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
 
-    "formatters": {
-        "verbose": {
-            "format": "[{levelname}] {asctime} {name} — {message}",
-            "style": "{",
-        },
-    },
-
     "handlers": {
-        "file": {
-            "level": "INFO",
-            "class": "logging.FileHandler",
-            "filename": os.path.join(BASE_DIR, "logs", "django.log"),
-            "formatter": "verbose",
-        },
         "console": {
             "class": "logging.StreamHandler",
-            "formatter": "verbose",
         },
     },
 
     "root": {
-        "handlers": ["file", "console"],
+        "handlers": ["console"],
         "level": "INFO",
     },
 }

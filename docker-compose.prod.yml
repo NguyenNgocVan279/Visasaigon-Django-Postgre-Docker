@@ -1,9 +1,10 @@
 version: '3.9'
 
 services:
-  # =======================
+
+  # ======================================================
   # PostgreSQL
-  # =======================
+  # ======================================================
   db:
     image: postgres:15
     container_name: visasaigon_db
@@ -14,12 +15,16 @@ services:
       - visasaigon_postgres_data:/var/lib/postgresql/data
     networks:
       - visasaigon_network
-    # Production không expose DB ra ngoài
-    # Nếu cần truy cập tạm thời, bạn ssh vào server
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
-  # =======================
+  # ======================================================
   # Django + Gunicorn
-  # =======================
+  # ======================================================
   web:
     build:
       context: ./backend
@@ -32,17 +37,18 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.prod
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - visasaigon_network
     volumes:
-      # Chia sẻ static/media để nginx đọc được
-      - ./backend/static:/app/static
-      - ./backend/media:/app/media
+      # Django sẽ tạo static vào /vol/static
+      - static_volume:/vol/static
+      - media_volume:/vol/media
 
-  # =======================
-  # NGINX Reverse Proxy
-  # =======================
+  # ======================================================
+  # NGINX
+  # ======================================================
   nginx:
     image: nginx:latest
     container_name: visasaigon_nginx
@@ -53,23 +59,51 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      # File nginx.conf của bạn nằm trong backend/docker/
       - ./backend/docker/nginx.conf:/etc/nginx/nginx.conf:ro
 
-      # Static & media mount từ web → nginx serve
-      - ./backend/static:/app/static
-      - ./backend/media:/app/media
+      # Match đúng với STATIC_ROOT / MEDIA_ROOT
+      - static_volume:/vol/static
+      - media_volume:/vol/media
 
-      # Certbot (nếu bạn dùng HTTPS)
+      # Certbot
       - ./nginx/certbot/conf:/etc/letsencrypt
       - ./nginx/certbot/www:/var/www/certbot
 
     networks:
       - visasaigon_network
 
+  # ======================================================
+  # Certbot (Auto Renewal)
+  # ======================================================
+  certbot:
+    image: certbot/certbot
+    container_name: visasaigon_certbot
+    entrypoint: "/bin/sh -c"
+    command: >
+      "trap exit TERM;
+      while :; do
+        certbot renew --webroot -w /var/www/certbot;
+        sleep 12h;
+      done"
+    volumes:
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    networks:
+      - visasaigon_network
+    depends_on:
+      - nginx
+
+# ==========================================================
+# VOLUMES
+# ==========================================================
 volumes:
   visasaigon_postgres_data:
+  static_volume:
+  media_volume:
 
+# ==========================================================
+# NETWORK
+# ==========================================================
 networks:
   visasaigon_network:
     driver: bridge
