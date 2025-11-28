@@ -54,6 +54,9 @@ RUN chmod +x /entrypoint.sh
 
 # Tạo user non-root
 RUN adduser --disabled-password --gecos '' django
+
+# ĐÃ bổ sung trên aws
+
 USER django
 
 EXPOSE 8000
