@@ -52,7 +52,14 @@ RUN mkdir -p /vol/static && \
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+# Tạo user non-root
 RUN adduser --disabled-password --gecos '' django
+
+# Tạo thư mục static/media
+RUN mkdir -p /vol/static && \
+    mkdir -p /vol/media && \
+    chown -R django:django /vol
+
 USER django
 
 EXPOSE 8000
