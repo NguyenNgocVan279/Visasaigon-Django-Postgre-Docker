@@ -24,19 +24,20 @@ jobs:
     - name: Add EC2 to known_hosts
       run: ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
-    # 4) Push .env.prod lên VPS (tạo file trước khi rsync code)
+    # 4) Push .env.prod lên VPS
     - name: Upload .env.prod to server
       run: |
         ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "mkdir -p ~/visasaigon/backend"
         echo "${{ secrets.ENV_PROD }}" | ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "cat > ~/visasaigon/backend/.env.prod"
 
-    # 5) Rsync code (tránh xoá mất file .env.prod)
+    # 5) Rsync code — BỎ thư mục nginx/certbot để không xoá / không đè chứng chỉ
     - name: Upload project to EC2
       run: |
         rsync -avz \
           --exclude '.git/' \
           --exclude '__pycache__/' \
           --exclude 'backend/.env.prod' \
+          --exclude 'nginx/certbot/' \
           --delete \
           ./ \
           ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:~/visasaigon/
