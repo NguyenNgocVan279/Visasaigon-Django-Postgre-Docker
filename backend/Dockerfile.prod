@@ -32,7 +32,7 @@ ENV TZ=Asia/Ho_Chi_Minh
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         libpq5 libmagic1 netcat-openbsd tzdata \
-        libjpeg62-turbo libwebp7 libtiff5 zlib1g && \
+        libjpeg62-turbo libwebp7 libtiff6 zlib1g && \
     rm -rf /var/lib/apt/lists/*
 
 ENV VIRTUAL_ENV="/opt/venv"
