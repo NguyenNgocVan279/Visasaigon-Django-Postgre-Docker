@@ -1,4 +1,4 @@
-name: Deploy to VPS
+name: Deploy to EC2
 
 on:
   push:
@@ -10,52 +10,53 @@ jobs:
 
     steps:
 
-    # 1) Checkout
+    # 1) Checkout source
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # 2) SSH key
+    # 2) Setup SSH key
     - name: Set up SSH key
       uses: webfactory/ssh-agent@v0.7.0
       with:
         ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
 
-    # 3) Add EC2 known_hosts
-    - name: Add VPS to known_hosts
+    # 3) Add EC2 public key to known_hosts
+    - name: Add EC2 to known_hosts
       run: ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
-    # 4) Upload .env.prod
+    # 4) Push .env.prod lên VPS (tạo file trước khi rsync code)
     - name: Upload .env.prod to server
       run: |
         ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "mkdir -p ~/visasaigon/backend"
         echo "${{ secrets.ENV_PROD }}" | ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "cat > ~/visasaigon/backend/.env.prod"
 
-    # 5) Rsync code (xóa file cũ)
-    - name: Upload project to VPS
+    # 5) Rsync code (tránh xoá mất file .env.prod)
+    - name: Upload project to EC2
       run: |
         rsync -avz \
           --exclude '.git/' \
           --exclude '__pycache__/' \
+          --exclude 'backend/.env.prod' \
           --delete \
           ./ \
           ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:~/visasaigon/
 
-    # 6) Deploy with zero downtime
-    - name: Deploy on VPS
+    # 6) Build + Deploy Docker
+    - name: Deploy on EC2
       run: |
         ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
           set -e
           cd ~/visasaigon
 
-          echo "==> Pulling latest containers"
+          echo "==> Pulling latest images (if any)"
           docker compose -f docker-compose.prod.yml pull || true
 
-          echo "==> Building containers"
-          docker compose -f docker-compose.prod.yml build
+          echo "==> Building fresh images"
+          docker compose -f docker-compose.prod.yml build --no-cache
 
-          echo "==> Bringing up containers (zero downtime)"
+          echo "==> Starting services (zero downtime)"
           docker compose -f docker-compose.prod.yml up -d --remove-orphans
 
-          echo "==> Cleanup old images"
+          echo "==> Cleaning old images"
           docker image prune -af || true
         EOF
