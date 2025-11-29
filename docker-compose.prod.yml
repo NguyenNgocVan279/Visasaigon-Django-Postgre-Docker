@@ -2,9 +2,6 @@ version: '3.9'
 
 services:
 
-  # =========================================
-  # PostgreSQL Database
-  # =========================================
   db:
     image: postgres:15
     container_name: visasaigon_db
@@ -22,9 +19,7 @@ services:
       retries: 5
       start_period: 10s
 
-  # =========================================
-  # Django + Gunicorn
-  # =========================================
+
   web:
     build:
       context: ./backend
@@ -45,9 +40,7 @@ services:
     networks:
       - visasaigon_network
 
-  # =========================================
-  # NGINX Reverse Proxy
-  # =========================================
+
   nginx:
     image: nginx:latest
     container_name: visasaigon_nginx
@@ -57,17 +50,21 @@ services:
     ports:
       - "80:80"
       - "443:443"
+
     volumes:
-      # nginx.conf
+      # NGINX CONF
       - ./backend/docker/nginx.conf:/etc/nginx/nginx.conf:ro
 
       # static & media
       - static_volume:/vol/static
       - media_volume:/vol/media
 
-      # SSL certs (copied into project)
-      - ./backend/docker/nginx/certs/fullchain.pem:/etc/nginx/certs/fullchain.pem:ro
-      - ./backend/docker/nginx/certs/privkey.pem:/etc/nginx/certs/privkey.pem:ro
+      # === CERTBOT – DÙNG FILE TRÊN VPS ===
+      - /etc/letsencrypt/live/visasaigon.net/fullchain.pem:/etc/nginx/ssl/fullchain.pem:ro
+      - /etc/letsencrypt/live/visasaigon.net/privkey.pem:/etc/nginx/ssl/privkey.pem:ro
+
+      # Certbot challenge
+      - /var/www/certbot:/var/www/certbot
 
       # logs
       - nginx_logs:/var/log/nginx
@@ -76,18 +73,12 @@ services:
       - visasaigon_network
 
 
-# =========================================
-# VOLUMES
-# =========================================
 volumes:
   visasaigon_postgres_data:
   static_volume:
   media_volume:
   nginx_logs:
 
-# =========================================
-# NETWORK
-# =========================================
 networks:
   visasaigon_network:
     driver: bridge
