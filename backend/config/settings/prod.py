@@ -19,7 +19,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.visasaigon.net",
 ]
 
-STATICFILES_DIRS = []  # production không dùng STATICFILES_DIRS
+# STATICFILES_DIRS = []  # production không dùng STATICFILES_DIRS
 
 # -----------------------------------------------------------------------------
 # DATABASE - PostgreSQL
