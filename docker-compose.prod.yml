@@ -29,8 +29,8 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    image: visasaigon_backend
     container_name: visasaigon_web
+    image: visasaigon_backend
     restart: always
     env_file:
       - ./backend/.env.prod
@@ -46,7 +46,7 @@ services:
       - media_volume:/vol/media
 
   # ======================================================
-  # NGINX
+  # NGINX Reverse Proxy
   # ======================================================
   nginx:
     image: nginx:latest
@@ -60,10 +60,11 @@ services:
     volumes:
       - ./backend/docker/nginx.conf:/etc/nginx/nginx.conf:ro
 
+      # static & media
       - static_volume:/vol/static
       - media_volume:/vol/media
 
-      # Let's Encrypt
+      # mount certbot certs
       - ./nginx/certbot/conf:/etc/letsencrypt
       - ./nginx/certbot/www:/var/www/certbot
 
@@ -74,7 +75,7 @@ services:
       - visasaigon_network
 
   # ======================================================
-  # Certbot (Auto Renewal)
+  # Certbot – auto renew SSL
   # ======================================================
   certbot:
     image: certbot/certbot
@@ -94,18 +95,18 @@ services:
     depends_on:
       - nginx
 
-# ==========================================================
+# ======================================================
 # VOLUMES
-# ==========================================================
+# ======================================================
 volumes:
   visasaigon_postgres_data:
   static_volume:
   media_volume:
   nginx_logs:
 
-# ==========================================================
+# ======================================================
 # NETWORK
-# ==========================================================
+# ======================================================
 networks:
   visasaigon_network:
     driver: bridge
