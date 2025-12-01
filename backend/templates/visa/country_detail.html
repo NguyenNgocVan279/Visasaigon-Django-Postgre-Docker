@@ -18,12 +18,6 @@
             <div class="col-lg-7 text-white wow fadeInLeft" data-wow-delay="0.2s">
                 <h1 class="display-6 fw-bold wow fadeInUp text-muted" data-wow-delay="0.3s">{{ detail.hero_title }}</h1>
                 <p class="lead mt-3 wow fadeInUp" data-wow-delay="0.45s">{{ detail.hero_subtitle }}</p>
-
-                {% comment %} {% if detail.cta_button_text %}
-                <div class="d-flex gap-2 mt-4 wow zoomIn" data-wow-delay="0.6s">
-                    <a href="{{ detail.cta_button_link }}" class="btn btn-light btn-lg pulse-soft">{{ detail.cta_button_text }}</a>
-                </div>
-                {% endif %} {% endcomment %}
             </div>
 
             <!-- Card / Image -->
@@ -32,7 +26,7 @@
                     {% if visa_types %}
                     <span class="badge bg-warning text-dark mb-2 px-3 py-2 rounded-pill wow fadeInDown">Phổ biến</span>
                     <h5 class="mt-2 visa-title">Visa {{ detail.visa_types_summary}}</h5>
-                    <p class="mb-2 text-muted">Thời gian xử lý trung bình: <strong>{{ detail.visa_processing_time }}</strong></p>
+                    <p class="mb-2 text-muted"><strong>{{ detail.visa_processing_time }}</strong></p>
                     <hr>
                     <ul class="mb-0 visa-list ps-3">
                         <li class="wow fadeInUp" data-wow-delay="0.15s">{{ detail.visa_highlight_note_1 }}</li>
@@ -48,7 +42,7 @@
 </section>
 
 <!-- GIỚI THIỆU -->
-<div class="row g-4 mb-5 wow fadeInUp" data-wow-delay="0.2s">
+<div class="row g-4 mb-5 wow fadeInUp mt-2" data-wow-delay="0.2s">
     <div class="col-12">
         <div class="p-4 info-card shadow-sm">
             <h3 class="section-title">{{ detail.overview_title }}</h3>
@@ -70,7 +64,10 @@
     </div>
     <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.25s">
         <h3 class="fw-semibold">{{ section.title }}</h3>
-        <p class="text-muted">{{ section.content }}</p>
+        {% comment %} <p class="text-muted">{{ section.content }}</p> {% endcomment %}
+        <div class="section-text">
+            {{ section.content }}
+        </div>
     </div>
     {% else %}
     <div class="col-lg-6 order-lg-2 wow fadeInRight" data-wow-delay="0.15s">
@@ -82,7 +79,10 @@
     </div>
     <div class="col-lg-6 order-lg-1 wow fadeInLeft" data-wow-delay="0.25s">
         <h3 class="fw-semibold">{{ section.title }}</h3>
-        <p class="text-muted">{{ section.content }}</p>
+        {% comment %} {{ section.content|linebreaksbr }} {% endcomment %}
+        <div class="section-text">
+            {{ section.content }}
+        </div>
     </div>
     {% endif %}
 </div>
