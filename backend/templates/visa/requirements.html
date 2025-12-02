@@ -57,7 +57,7 @@
             {% for doc in documents %}
                 <li class="list-group-item">
                     <strong class="text-muted">{{ doc.name }}</strong><br>
-                    <small>{{ doc.description }}</small>
+                    <small>{{ doc.description|safe }}</small>
                 </li>
             {% endfor %}
         </ul>

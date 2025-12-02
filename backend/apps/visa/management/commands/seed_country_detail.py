@@ -13,22 +13,18 @@ class Command(BaseCommand):
         detail_data = {
             "uc": {
                 "hero_title": "Visa Úc – Hướng dẫn cập nhật mới nhất (2025)",
-                "hero_subtitle": "Tìm hiểu quy trình, giấy tờ và lưu ý quan trọng khi xin visa du lịch Úc.",
+                "hero_subtitle": "Tìm hiểu quy trình, giấy tờ và lưu ý quan trọng khi xin visa Úc.",
                 "overview_title": "Tổng quan Visa Úc",
-                "overview_content": (
-                    "Visa du lịch Úc (Subclass 600) yêu cầu chứng minh tài chính, lịch trình chuyến đi và bảo hiểm du lịch. "
-                    "Từ năm 2025, người xin visa được yêu cầu cung cấp biometrics và lịch trình rõ ràng."
-                ),
+                "overview_content": "Visa Úc là giấy phép do Chính phủ Úc cấp, cho phép công dân nước ngoài nhập cảnh để du lịch, thăm thân, công tác hoặc học tập tùy theo mục đích. Mỗi loại visa có điều kiện, thời hạn lưu trú và quy trình xét duyệt khác nhau. Hiểu rõ từng loại visa giúp hồ sơ của bạn phù hợp yêu cầu và tăng khả năng đậu ngay từ lần nộp đầu tiên.",
                 "visa_types_summary": "Du lịch, thăm thân, công tác",
-                "visa_processing_time": "15–30 ngày làm việc",
-                "visa_highlight_note_1": "Cần cung cấp dữ liệu sinh trắc học (biometrics).",
-                "visa_highlight_note_2": "Bảo hiểm du lịch là yêu cầu quan trọng.",
-                "visa_highlight_note_3": "Tài chính minh bạch giúp tăng tỉ lệ đậu.",
-                "cta_title": "Xem giấy tờ cần chuẩn bị",
-                "cta_featured_requirement_1": "Hộ chiếu còn hạn ít nhất 6 tháng.",
-                "cta_featured_requirement_2": "Sao kê ngân hàng 3–6 tháng gần nhất.",
-                "cta_featured_requirement_3": "Vé máy bay khứ hồi hoặc lịch trình chi tiết.",
-                "cta_featured_requirement_4": "Bảo hiểm du lịch suốt thời gian lưu trú.",
+                "visa_processing_time": "Lưu ý nổi bật:",
+                "visa_highlight_note_1": "Hồ sơ đầy đủ, chính xác và trung thực",
+                "visa_highlight_note_2": "Sinh trắc học (biometrics) & y tế.",
+                "visa_highlight_note_3": "Chứng minh tài chính & ràng buộc về mục đích.",
+                "cta_featured_requirement_1": "Hộ chiếu hợp lệ.",
+                "cta_featured_requirement_2": "Chứng minh tài chính.",
+                "cta_featured_requirement_3": "Chứng minh công việc / ràng buộc tại Việt Nam.",
+                "cta_featured_requirement_4": "Lịch sử du lịch & giấy tờ nhân thân.",
                 "cta_subtitle": "Tra cứu chi tiết yêu cầu hồ sơ",
                 "cta_button_text": "Tra cứu yêu cầu hồ sơ",
                 "cta_button_link": "/visa/ho-so-yeu-cau/",
@@ -110,7 +106,11 @@ class Command(BaseCommand):
         # COUNTRY SECTIONS
         section_base = {
             "uc": [
-                {"title": "Yêu cầu tài chính", "content": "Cần sao kê ngân hàng 3–6 tháng, thu nhập ổn định.", "image": "visa/country/sections/australia_financial.jpg"},
+                {"title": "Hồ sơ đầy đủ, chính xác và trung thực", "content": (
+                    "Điền thông tin trùng khớp với giấy tờ gốc như: hộ chiếu, giấy tờ tài chính, thư mời hoặc thư nhập học.\n\n"
+                    "Không khai gian dối: Úc kiểm tra rất kỹ hồ sơ. Nếu bị phát hiện khai sai, visa có thể bị từ chối ngay lập tức.\n\n"
+                    "Nhiều hồ sơ bị trì hoãn hoặc từ chối chỉ vì thiếu giấy tờ quan trọng (ví dụ: chứng minh tài chính, chứng minh mối quan hệ)."
+                ), "image": "visa/country/sections/australia_financial.jpg"},
                 {"title": "Biometrics", "content": "Bắt buộc cung cấp dữ liệu sinh trắc học sau khi nộp đơn.", "image": "visa/country/sections/australia_biometrics.jpg"},
                 {"title": "Bảo hiểm du lịch", "content": "Khuyến nghị mua bảo hiểm du lịch suốt thời gian lưu trú.", "image": "visa/country/sections/australia_insurance.jpg"},
             ],

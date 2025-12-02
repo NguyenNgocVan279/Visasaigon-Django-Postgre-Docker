@@ -1,5 +1,6 @@
 from django.db import models
 from apps.core_app.models import TimeStampedModel
+from ckeditor.fields import RichTextField
 
 class Page(TimeStampedModel):
     title = models.CharField(max_length=255)
@@ -10,7 +11,11 @@ class Page(TimeStampedModel):
         null=True,
         help_text="Ảnh đại diện của trang"
     )
-    content = models.TextField()
+    content = RichTextField()
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        verbose_name = "Trang tĩnh"
+        verbose_name_plural = "Trang tĩnh"

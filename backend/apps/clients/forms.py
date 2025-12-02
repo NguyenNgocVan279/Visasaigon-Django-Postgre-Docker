@@ -2,6 +2,7 @@ from django import forms
 from django.forms import modelformset_factory
 from .models import Client, Application, ApplicationFile
 from django.utils.safestring import mark_safe
+from ckeditor.widgets import CKEditorWidget
 
 
 # -------------------------------------------------
@@ -75,7 +76,7 @@ class ApplicationForm(BaseStyledForm):
         }
         widgets = {
             "inviter_dob": forms.DateInput(attrs={"type": "date"}),
-            "family_members": forms.Textarea(
+            "family_members": CKEditorWidget(
                 attrs={
                     "rows": 8,
                     "placeholder": mark_safe(

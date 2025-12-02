@@ -2,6 +2,7 @@ from django.db import models
 from apps.core_app.models import TimeStampedModel
 from apps.visa.models import VisaType
 from .utils import application_file_upload_path
+from ckeditor.fields import RichTextField
 
 
 # ============================================================
@@ -19,8 +20,8 @@ class Client(TimeStampedModel):
 
     class Meta:
         ordering = ["last_name", "first_name"]
-        verbose_name = "Client"
-        verbose_name_plural = "Clients"
+        verbose_name = "Danh sách khách hàng"
+        verbose_name_plural = "Danh sách khách hàng"
 
 
 # ============================================================
@@ -45,9 +46,9 @@ class Application(TimeStampedModel):
     travel_history_countries = models.CharField(max_length=255, blank=True, null=True)
     
     # -------- Family members --------
-    family_members = models.TextField(
+    family_members = RichTextField(
         blank=True,
-        null=True,
+        null=True
     )
 
     # -------- Occupation --------
@@ -75,8 +76,8 @@ class Application(TimeStampedModel):
 
     class Meta:
         ordering = ["-created_at"]
-        verbose_name = "Application"
-        verbose_name_plural = "Applications"
+        verbose_name = "Đăng ký dịch vụ"
+        verbose_name_plural = "Đăng ký dịch vụ"
 
 
 # ============================================================
@@ -115,6 +116,6 @@ class ApplicationFile(TimeStampedModel):
 
     class Meta:
         ordering = ["-created_at"]
-        verbose_name = "Application File"
-        verbose_name_plural = "Application Files"
+        verbose_name = "File khách hàng gửi"
+        verbose_name_plural = "File khách hàng gửi"
 

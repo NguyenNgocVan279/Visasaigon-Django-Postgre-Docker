@@ -46,7 +46,7 @@
     <div class="col-12">
         <div class="p-4 info-card shadow-sm">
             <h3 class="section-title">{{ detail.overview_title }}</h3>
-            <p class="mt-2 mb-0">{{ detail.overview_content }}</p>
+            <p class="mt-2 mb-0">{{ detail.overview_content|safe }}</p>
         </div>
     </div>
 </div>
@@ -64,9 +64,8 @@
     </div>
     <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.25s">
         <h3 class="fw-semibold">{{ section.title }}</h3>
-        {% comment %} <p class="text-muted">{{ section.content }}</p> {% endcomment %}
         <div class="section-text">
-            {{ section.content }}
+            {{ section.content|safe }}
         </div>
     </div>
     {% else %}
@@ -79,9 +78,8 @@
     </div>
     <div class="col-lg-6 order-lg-1 wow fadeInLeft" data-wow-delay="0.25s">
         <h3 class="fw-semibold">{{ section.title }}</h3>
-        {% comment %} {{ section.content|linebreaksbr }} {% endcomment %}
         <div class="section-text">
-            {{ section.content }}
+            {{ section.content|safe }}
         </div>
     </div>
     {% endif %}

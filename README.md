@@ -72,6 +72,8 @@ Bộ 1: Sang – Dịu – Nữ tính (Tương sinh mạnh)
 
 #7B2D26
 
+rgba(189, 76, 73, 1)
+
 Màu lá chuối non chuẩn
 
 👉 #A3D65C

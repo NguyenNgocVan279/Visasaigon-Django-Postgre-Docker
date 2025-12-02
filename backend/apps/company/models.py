@@ -1,5 +1,6 @@
 from django.db import models
 from apps.core_app.models import TimeStampedModel
+from ckeditor.fields import RichTextField
 
 
 class CompanyProfile(TimeStampedModel):
@@ -16,12 +17,12 @@ class CompanyProfile(TimeStampedModel):
     youtube = models.URLField(blank=True)
     zalo = models.URLField(blank=True)
 
-    description = models.TextField(blank=True)
-    normal_working_time = models.TextField(
+    description = RichTextField(blank=True)
+    normal_working_time = models.CharField(
         blank=True,
         help_text="Nhập giờ làm việc, ví dụ: '08:00-17:00'"
     )
-    saturday_working_time = models.TextField(
+    saturday_working_time = models.CharField(
         blank=True,
         help_text="Nhập giờ làm việc, ví dụ: '08:00-17:00'"
     )

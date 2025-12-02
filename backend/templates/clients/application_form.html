@@ -87,6 +87,14 @@
                                 {% endif %}
                             </div>
 
+                            {% elif field.name == "family_members" %}
+                            <div class="col-12 wow fadeInUp">
+                                <label class="form-label fw-semibold">{{ field.label }}</label>
+                                <div class="w-100">
+                                    {{ field }}
+                                </div>
+                            </div>
+                            
                             {% elif field.name not in "inviter_full_name inviter_dob inviter_address inviter_phone inviter_email" %}
                             <div class="col-md-6 wow fadeInUp"
                                  data-wow-delay="0.{{ forloop.counter }}s">

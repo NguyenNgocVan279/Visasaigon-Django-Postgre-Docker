@@ -50,15 +50,15 @@ form {
 /* Tên document */
 .list-group-item strong {
     font-size: 1.1rem;
-    color: #1e40af;
+    color: #8BCB3F;
 }
 
 /* Description */
 .list-group-item small {
     display: block;
     margin-top: 0.5rem;
-    white-space: pre-line; /* giữ xuống dòng */
-    line-height: 1.5;
+    /* white-space: pre-line; */
+    /* line-height: 1.5; */
 }
 
 /* Alert */

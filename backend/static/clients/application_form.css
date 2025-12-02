@@ -50,3 +50,8 @@ select {
     height: calc(2.4rem + 2px) !important;
     width: 100% !important;
 }
+
+.django-ckeditor-widget {
+    width: 100% !important;
+    display: block !important;
+}

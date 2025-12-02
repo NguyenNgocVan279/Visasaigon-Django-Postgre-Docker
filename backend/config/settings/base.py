@@ -19,6 +19,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    # Install
+    'ckeditor',
+
     # My apps
     "core",
     "apps.core_app",
@@ -29,6 +32,14 @@ INSTALLED_APPS = [
     "apps.pages",
     "apps.company",
 ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+    }
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
