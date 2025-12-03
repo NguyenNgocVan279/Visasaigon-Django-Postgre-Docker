@@ -157,7 +157,7 @@
                         </button>
                     </h2>
                     <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#faq">
-                        <div class="accordion-body">{{ faq.answer }}</div>
+                        <div class="accordion-body">{{ faq.answer|safe }}</div>
                     </div>
                 </div>
                 {% endfor %}
