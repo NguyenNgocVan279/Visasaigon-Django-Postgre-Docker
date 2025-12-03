@@ -34,10 +34,6 @@ def country_list(request):
     countries = Country.objects.all()
     return render(request, "visa/country_list.html", {"countries": countries})
 
-# def country_detail(request, country_slug):
-#     country = get_object_or_404(Country, slug=country_slug)
-#     return render(request, "visa/country_detail.html", {"country": country})
-
 # -----------------------------
 # Trang chi tiết quốc gia
 # -----------------------------
