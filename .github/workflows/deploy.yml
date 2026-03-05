@@ -1,8 +1,8 @@
-name: Deploy to EC2
+name: Deploy to Linode VPS
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   deploy:
@@ -13,40 +13,36 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up SSH key
+    - name: Setup SSH
       uses: webfactory/ssh-agent@v0.7.0
       with:
         ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
 
-    - name: Add EC2 to known_hosts
+    - name: Add server to known_hosts
       run: ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
-    # Upload .env.prod trước khi rsync
-    - name: Upload .env.prod to server
+    - name: Upload .env.prod
       run: |
         ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "mkdir -p ~/visasaigon/backend"
         echo "${{ secrets.ENV_PROD }}" | ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "cat > ~/visasaigon/backend/.env.prod"
 
-    # == FIX: rsync bỏ qua thư mục chứa chứng chỉ
-    - name: Upload project to EC2
+    - name: Upload project
       run: |
         rsync -avz \
           --exclude '.git/' \
           --exclude '__pycache__/' \
           --exclude 'backend/.env.prod' \
-          --exclude 'backend/docker/nginx/certs/' \
           --delete \
           ./ \
           ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:~/visasaigon/
 
-    - name: Deploy on EC2
+    - name: Deploy docker
       run: |
         ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
           set -e
           cd ~/visasaigon
 
-          docker compose -f docker-compose.prod.yml pull || true
-          docker compose -f docker-compose.prod.yml build --no-cache
-          docker compose -f docker-compose.prod.yml up -d --remove-orphans
+          docker compose -f docker-compose.prod.yml build
+          docker compose -f docker-compose.prod.yml up -d
           docker image prune -af || true
         EOF

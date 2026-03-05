@@ -1,0 +1,230 @@
+📦visasaigon-django-postgre-docker
+ ┣ 📂.git
+ ┣ 📂.github
+ ┃ ┗ 📂workflows
+ ┃ ┃ ┗ 📜deploy.yml
+ ┣ 📂backend
+ ┃ ┣ 📂apps
+ ┃ ┃ ┣ 📂accounts
+ ┃ ┃ ┃ ┣ 📂migrations
+ ┃ ┃ ┃ ┃ ┣ 📜0001_initial.py
+ ┃ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┃ ┣ 📜admin.py
+ ┃ ┃ ┃ ┣ 📜apps.py
+ ┃ ┃ ┃ ┣ 📜models.py
+ ┃ ┃ ┃ ┣ 📜tests.py
+ ┃ ┃ ┃ ┣ 📜urls.py
+ ┃ ┃ ┃ ┣ 📜views.py
+ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┣ 📂blog
+ ┃ ┃ ┃ ┣ 📂migrations
+ ┃ ┃ ┃ ┃ ┣ 📜0001_initial.py
+ ┃ ┃ ┃ ┃ ┣ 📜0002_alter_blogcategory_options_alter_blogpost_options_and_more.py
+ ┃ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┃ ┣ 📜admin.py
+ ┃ ┃ ┃ ┣ 📜apps.py
+ ┃ ┃ ┃ ┣ 📜models.py
+ ┃ ┃ ┃ ┣ 📜tests.py
+ ┃ ┃ ┃ ┣ 📜views.py
+ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┣ 📂clients
+ ┃ ┃ ┃ ┣ 📂migrations
+ ┃ ┃ ┃ ┃ ┣ 📜0001_initial.py
+ ┃ ┃ ┃ ┃ ┣ 📜0002_alter_application_options_and_more.py
+ ┃ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┃ ┣ 📜admin.py
+ ┃ ┃ ┃ ┣ 📜apps.py
+ ┃ ┃ ┃ ┣ 📜forms.py
+ ┃ ┃ ┃ ┣ 📜models.py
+ ┃ ┃ ┃ ┣ 📜tests.py
+ ┃ ┃ ┃ ┣ 📜urls.py
+ ┃ ┃ ┃ ┣ 📜utils.py
+ ┃ ┃ ┃ ┣ 📜views.py
+ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┣ 📂company
+ ┃ ┃ ┃ ┣ 📂management
+ ┃ ┃ ┃ ┃ ┗ 📂commands
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜seed_company.py
+ ┃ ┃ ┃ ┣ 📂migrations
+ ┃ ┃ ┃ ┃ ┣ 📜0001_initial.py
+ ┃ ┃ ┃ ┃ ┣ 📜0002_alter_companyprofile_description_and_more.py
+ ┃ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┃ ┣ 📜admin.py
+ ┃ ┃ ┃ ┣ 📜apps.py
+ ┃ ┃ ┃ ┣ 📜context_processors.py
+ ┃ ┃ ┃ ┣ 📜models.py
+ ┃ ┃ ┃ ┣ 📜tests.py
+ ┃ ┃ ┃ ┣ 📜views.py
+ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┣ 📂core_app
+ ┃ ┃ ┃ ┣ 📂migrations
+ ┃ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┃ ┣ 📜admin.py
+ ┃ ┃ ┃ ┣ 📜apps.py
+ ┃ ┃ ┃ ┣ 📜models.py
+ ┃ ┃ ┃ ┣ 📜tests.py
+ ┃ ┃ ┃ ┣ 📜views.py
+ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┣ 📂faq
+ ┃ ┃ ┃ ┣ 📂migrations
+ ┃ ┃ ┃ ┃ ┣ 📜0001_initial.py
+ ┃ ┃ ┃ ┃ ┣ 📜0002_alter_faqcategory_options_alter_faqitem_options_and_more.py
+ ┃ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┃ ┣ 📜admin.py
+ ┃ ┃ ┃ ┣ 📜apps.py
+ ┃ ┃ ┃ ┣ 📜models.py
+ ┃ ┃ ┃ ┣ 📜tests.py
+ ┃ ┃ ┃ ┣ 📜views.py
+ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┣ 📂pages
+ ┃ ┃ ┃ ┣ 📂migrations
+ ┃ ┃ ┃ ┃ ┣ 📜0001_initial.py
+ ┃ ┃ ┃ ┃ ┣ 📜0002_alter_page_options_alter_page_content.py
+ ┃ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┃ ┣ 📜admin.py
+ ┃ ┃ ┃ ┣ 📜apps.py
+ ┃ ┃ ┃ ┣ 📜models.py
+ ┃ ┃ ┃ ┣ 📜tests.py
+ ┃ ┃ ┃ ┣ 📜urls.py
+ ┃ ┃ ┃ ┣ 📜views.py
+ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┣ 📂visa
+ ┃ ┃ ┃ ┣ 📂management
+ ┃ ┃ ┃ ┃ ┗ 📂commands
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_country_detail.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_cong_tac_canada.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_cong_tac_schengen.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_cong_tac_uc.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_cong_tac_usa.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_du_lich_canada.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_du_lich_schengen.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_du_lich_uc.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_du_lich_usa.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_tham_than_canada.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_tham_than_schengen.py
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜seed_visa_tham_than_uc.py
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜seed_visa_tham_than_usa.py
+ ┃ ┃ ┃ ┣ 📂migrations
+ ┃ ┃ ┃ ┃ ┣ 📜0001_initial.py
+ ┃ ┃ ┃ ┃ ┣ 📜0002_alter_country_options_alter_countrydetail_options_and_more.py
+ ┃ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┃ ┣ 📜admin.py
+ ┃ ┃ ┃ ┣ 📜apps.py
+ ┃ ┃ ┃ ┣ 📜context_processors.py
+ ┃ ┃ ┃ ┣ 📜models.py
+ ┃ ┃ ┃ ┣ 📜tests.py
+ ┃ ┃ ┃ ┣ 📜urls.py
+ ┃ ┃ ┃ ┣ 📜views.py
+ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┣ 📂config
+ ┃ ┃ ┣ 📂settings
+ ┃ ┃ ┃ ┣ 📜base.py
+ ┃ ┃ ┃ ┣ 📜dev.py
+ ┃ ┃ ┃ ┣ 📜prod.py
+ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┣ 📜asgi.py
+ ┃ ┃ ┣ 📜urls.py
+ ┃ ┃ ┣ 📜wsgi.py
+ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┣ 📂core
+ ┃ ┃ ┣ 📂management
+ ┃ ┃ ┃ ┗ 📂commands
+ ┃ ┃ ┃ ┃ ┣ 📜seed_all.py
+ ┃ ┃ ┃ ┃ ┗ 📜__init__.py
+ ┃ ┃ ┣ 📜apps.py
+ ┃ ┃ ┣ 📜init.py
+ ┃ ┃ ┣ 📜middleware.py
+ ┃ ┃ ┣ 📜signals.py
+ ┃ ┃ ┗ 📜utils.py
+ ┃ ┣ 📂docker
+ ┃ ┃ ┣ 📜entrypoint.sh
+ ┃ ┃ ┣ 📜gunicorn.conf.py
+ ┃ ┃ ┣ 📜nginx.conf
+ ┃ ┃ ┗ 📜old_entrypoint.sh
+ ┃ ┣ 📂logs
+ ┃ ┃ ┗ 📜django.log
+ ┃ ┣ 📂media
+ ┃ ┃ ┣ 📂clients
+ ┃ ┃ ┃ ┗ 📂uploads
+ ┃ ┃ ┃ ┃ ┗ 📂Nguyễn_Ngọc_Văn
+ ┃ ┃ ┃ ┃ ┃ ┗ 📂2025
+ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂11
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂22
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜passport_Nguyễn_Ngọc_Văn_20251122.png
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂24
+ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📜passport_Nguyễn_Ngọc_Văn_20251124.png
+ ┃ ┃ ┣ 📂company
+ ┃ ┃ ┃ ┗ 📜logo.png
+ ┃ ┃ ┗ 📂visa
+ ┃ ┃ ┃ ┗ 📂country
+ ┃ ┃ ┃ ┃ ┣ 📂covers
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜country-canada_wV8AZxe.jpg
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜country-schengen_tF5ug9H.jpg
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜country-uc_GTVTSMC.jpg
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜country-usa_SOkMAhK.jpg
+ ┃ ┃ ┃ ┃ ┣ 📂flags
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜australia_cEgncr7.png
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜canada_gL3oq53.png
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜schengen_Wy56LAu.jpg
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜usa_IylI3Ge.jpg
+ ┃ ┃ ┃ ┃ ┗ 📂sections
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜australia_1.jpg
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜cover_image_australia.jpg
+ ┃ ┃ ┃ ┃ ┃ ┗ 📜sydney-city-aerial-view-sunset-16278.jpg
+ ┃ ┣ 📂requirements
+ ┃ ┃ ┗ 📜prod.txt
+ ┃ ┣ 📂static
+ ┃ ┃ ┣ 📂clients
+ ┃ ┃ ┃ ┣ 📜application_form.css
+ ┃ ┃ ┃ ┗ 📜application_form_add_upload_line.js
+ ┃ ┃ ┣ 📂css
+ ┃ ┃ ┣ 📂images
+ ┃ ┃ ┣ 📂js
+ ┃ ┃ ┃ ┗ 📜contact.js
+ ┃ ┃ ┣ 📂libs
+ ┃ ┃ ┣ 📂theme
+ ┃ ┃ ┗ 📂visa
+ ┃ ┃ ┃ ┣ 📜country_detail.css
+ ┃ ┃ ┃ ┗ 📜visa_requirements.css
+ ┃ ┣ 📂staticfiles
+ ┃ ┣ 📂templates
+ ┃ ┃ ┣ 📂blog
+ ┃ ┃ ┣ 📂clients
+ ┃ ┃ ┃ ┣ 📜application_form.html
+ ┃ ┃ ┃ ┗ 📜success.html
+ ┃ ┃ ┣ 📂faq
+ ┃ ┃ ┣ 📂includes
+ ┃ ┃ ┃ ┣ 📂homepage
+ ┃ ┃ ┃ ┃ ┣ 📜about.html
+ ┃ ┃ ┃ ┃ ┣ 📜carousel.html
+ ┃ ┃ ┃ ┃ ┣ 📜countries.html
+ ┃ ┃ ┃ ┃ ┣ 📜customer_result.html
+ ┃ ┃ ┃ ┃ ┣ 📜features.html
+ ┃ ┃ ┃ ┃ ┗ 📜modal_search.html
+ ┃ ┃ ┃ ┣ 📜footer.html
+ ┃ ┃ ┃ ┣ 📜head.html
+ ┃ ┃ ┃ ┗ 📜header.html
+ ┃ ┃ ┣ 📂pages
+ ┃ ┃ ┃ ┣ 📜about.html
+ ┃ ┃ ┃ ┣ 📜contact.html
+ ┃ ┃ ┃ ┗ 📜home.html
+ ┃ ┃ ┣ 📂visa
+ ┃ ┃ ┃ ┣ 📜country_detail.html
+ ┃ ┃ ┃ ┣ 📜country_list.html
+ ┃ ┃ ┃ ┗ 📜requirements.html
+ ┃ ┃ ┗ 📜base.html
+ ┃ ┣ 📜.dockerignore
+ ┃ ┣ 📜.env
+ ┃ ┣ 📜.env.example
+ ┃ ┣ 📜.env.prod
+ ┃ ┣ 📜.gitignore
+ ┃ ┣ 📜Dockerfile
+ ┃ ┣ 📜Dockerfile.prod
+ ┃ ┣ 📜manage.py
+ ┃ ┗ 📜requirements.txt
+ ┣ 📜deploy_instruction.md
+ ┣ 📜docker-compose.prod.yml
+ ┣ 📜docker-compose.yml
+ ┣ 📜README.md
+ ┗ 📜structure.txt

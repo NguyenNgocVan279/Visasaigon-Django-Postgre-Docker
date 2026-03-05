@@ -119,5 +119,155 @@ B. Build image trong Actions, push vào registry → trên server docker compose
 Mình sẽ cung cấp mẫu workflow cho phương án A (nhiều bạn dùng) vì đơn giản, không cần registry.
 
 
+docker ps
+
+Gỡ hoàn toàn Apache2:
+sudo systemctl stop apache2
+sudo systemctl disable apache2
+sudo apt purge apache2 apache2-utils apache2-bin apache2.2-common -y
+sudo apt autoremove -y
 
 
+Xong kiểm tra lại:
+
+sudo lsof -i :80
+
+
+→ Kết quả phải rỗng, nghĩa là không còn process nào nghe port 80.
+
+
+
+docker compose -f docker-compose.prod.yml down
+docker compose -f docker-compose.prod.yml up -d --build
+
+Sau khi lên container
+Kiểm tra log:
+docker logs visasaigon_web -f
+
+grep -R "gunicorn" -n .
+
+
+# Kiểm tra container đang chạy được tạo bởi compose file nào:
+docker inspect visasaigon_web | grep -i compose
+Nếu không thấy dòng:
+com.docker.compose.project.config_files: docker-compose.prod.yml
+→ Bạn đang dùng NHẦM compose file.
+
+# Xem nội dung file .env.prod trên VPS:
+ docker inspect visasaigon_web | grep -A50 "Env"
+
+# Rebuild lại container để nhận env mới:
+docker compose -f docker-compose.prod.yml down
+docker compose -f docker-compose.prod.yml up -d --build
+
+# Kiểm tra lại biến môi trường trong container
+docker exec -it visasaigon_web bash
+echo $DJANGO_ALLOWED_HOSTS
+echo $ALLOWED_HOSTS
+Bạn sẽ thấy:
+visasaigon.net,www.visasaigon.net,217.154.167.123,localhost,127.0.0.1
+
+# Sau khi sửa file nginx.conf, restart NGINX container:
+docker compose -f docker-compose.prod.yml restart nginx
+Nếu muốn chắc chắn:
+docker compose -f docker-compose.prod.yml down
+docker compose -f docker-compose.prod.yml up -d --build
+
+# Muốn rebuild sạch 100% thì dùng 3 lệnh:
+docker compose -f docker-compose.prod.yml down
+docker image prune -f
+docker compose -f docker-compose.prod.yml up --build -d
+
+
+🚀 Cách nhanh nhất & đầy đủ nhất
+Dùng một lệnh duy nhất:
+docker system prune -a --volumes -f
+Lệnh này sẽ xóa:
+✔ Containers
+✔ Images
+✔ Volumes
+✔ Build cache
+✔ Networks unused
+
+⚠️ LƯU Ý QUAN TRỌNG
+Sau khi chạy các lệnh này, Docker trên VPS coi như “reset sạch”.
+Bạn sẽ phải chạy lại CI/CD để build lại từ đầu:
+docker compose -f docker-compose.prod.yml up -d --build
+
+
+⚠ Lưu ý quan trọng khác trong settings/prod.py
+1️⃣ Bạn đặt:
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+🟠 Nếu bạn không chạy HTTPS (không dùng SSL trên Nginx) → login admin và form POST sẽ lỗi CSRF.
+Nên kiểm tra website bạn đang chạy HTTP hay HTTPS?
+
+
+✅ Lệnh mở và sửa file (dễ nhất – dùng nano)
+Ví dụ sửa file:
+settings/prod.py
+nano ~/visasaigon/backend/config/settings/prod.py
+
+# Test connection to Server (cổng 22):
+Test-NetConnection 217.154.167.123 -Port 22
+
+🚀 Cài Certbot:
+Chạy các lệnh sau trên VPS:
+(Không phải trong container — nếu bạn đang ở prompt kiểu root@abc123:/app#, hãy gõ exit để thoát ra VPS)
+1. Cài Certbot + plugin cho Nginx
+    sudo apt update
+    sudo apt install certbot python3-certbot-nginx -y
+2. Cấp SSL cho domain
+    sudo certbot --nginx -d visasaigon.net -d www.visasaigon.net
+3. Certbot sẽ hỏi:
+    Email → nhập email
+    Accept → yes
+    Redirect HTTP → chọn 2 (redirect sang HTTPS)
+    Xong certbot sẽ báo:
+    Congratulations! Your certificate is saved at:
+    /etc/letsencrypt/live/visasaigon.net/fullchain.pem
+
+
+1️⃣ Xem tất cả gói đã cài bằng dpkg
+    "dpkg -l"
+    Nếu muốn tìm một gói cụ thể:
+    dpkg -l | grep nginx
+
+
+# Lệnh xêm các ssh key trên laptop:
+    "ls ~/.ssh"
+
+
+# ssh vào EC2 của AWS(chạy trên git bash):
+ssh -i ~/.ssh/ec2-key-visasaigon.pem ubuntu@47.128.251.2
+ssh -i ~/.ssh/ec2-key-visasaigon.pem ubuntu@52.77.13.154
+
+# Làm sạch EC2:
+docker compose -f docker-compose.prod.yml down
+docker rm -f $(docker ps -aq)
+docker volume rm $(docker volume ls -q)
+docker system prune -af --volumes
+
+
+docker compose -f docker-compose.prod.yml build
+docker compose -f docker-compose.prod.yml up -d
+
+
+sudo ls -l /etc/letsencrypt/live/visasaigon.net/
+
+
+
+docker-compose -f docker-compose.prod.yml down -v
+docker-compose -f docker-compose.prod.yml up -d --build
+
+
+sudo docker exec visasaigon_web ls -R /vol/static
+sudo docker exec -it visasaigon_web ls /vol/static/theme/css
+
+
+
+# Chạy file seed_all trên EC2:
+sudo docker exec -it visasaigon_web python manage.py seed_all
+
+# Liệt kê toàn bộ nội dung thư mục ROOT "/" với đầy đủ thông tin chi tiết, bao gồm file ẩn và hiển thị kích thước ở dạng dễ đọc.
+ls -lah /
