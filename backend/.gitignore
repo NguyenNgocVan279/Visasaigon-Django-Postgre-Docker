@@ -16,3 +16,6 @@ deploy_instruction.md
 # IDE / Editor
 .vscode/
 .idea/
+
+#=============
+Import_database_to_Linode.txt

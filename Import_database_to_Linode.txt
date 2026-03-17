@@ -1,0 +1,103 @@
+💛🧡🧡I. PHẦN A: Tạo file .sql từ local 💚💚💛
+Bước 1: Mở pgAdmin và chọn database
+Mở pgAdmin
+Trong cột bên trái:
+Servers
+ └ PostgreSQL
+     └ Databases
+         └ visasaigon_db
+Click chuột phải vào visasaigon_db
+
+Bước 2: Chọn Backup
+Chọn:
+Backup...
+Một cửa sổ Backup Database sẽ hiện ra.
+
+Bước 3: Chọn nơi lưu file .sql
+Ở tab General
+Filename: chọn nơi lưu file
+Ví dụ:
+C:\Users\YourName\Desktop\visasaigon_db.sql
+hoặc
+D:\backup\visasaigon_db.sql
+
+Bước 4: Chỉnh format thành .sql
+Ở mục Format
+Chọn:
+Plain
+
+Bước 5: Export
+Nhấn:
+Backup
+pgAdmin sẽ tạo file:
+visasaigon_db.sql
+
+🧡🧡❤II. PHẦN B: Xoá database hiện tại trên production 💙💚💚
+Bạn phải kết nối vào database khác (thường là postgres) rồi mới xoá.
+1️⃣ Thoát khỏi psql hiện tại
+\q
+
+2️⃣ Kết nối vào database postgres
+docker exec -it visasaigon_db psql -U visasaigon -d postgres
+
+3️⃣ Xoá database cũ
+DROP DATABASE visasaigon_db;
+
+4️⃣ Tạo lại database
+CREATE DATABASE visasaigon_db;
+
+5️⃣ Thoát
+\q
+
+💜💙💙III. PHẦN C: Upload file .sql lên VPS Linode (Upload bằng scp)💜💜💙
+*** Xoá file .sql cũ *** (lệnh "rm visasaigon_db.sql")
+Bước 1: Mở PowerShell
+Nhấn:
+Windows + X
+Chọn:
+Windows PowerShell
+
+Bước 2: Chạy lệnh upload
+Chạy lệnh:
+scp C:\Users\ThinkPad\Downloads\visasaigon_db.sql root@Linide_IP:/root/
+
+
+Bước 3: Nhập password VPS
+Nó sẽ hỏi:
+root@IP_VPS password:
+Nhập password VPS.
+
+Nếu thành công bạn sẽ thấy dạng:
+visasaigon_db.sql      100%   15MB  1.2MB/s
+
+
+Bước 4: Kiểm tra file trên VPS
+SSH vào VPS:
+ssh root@IP_VPS
+
+Sau đó kiểm tra:
+ls /root
+Nếu thấy:
+visasaigon_db.sql
+→ Upload thành công.
+
+
+Bước 5: Import vào PostgreSQL Docker
+Chạy:
+docker exec -i visasaigon_db psql -U visasaigon -d visasaigon_db < /root/visasaigon_db.sql
+
+
+
+💛💛🧡 KIỂM TRA THÔNG TIN CỦA VPS 🧡🧡❤❤
+Truy cập vào VPS, chạy:
+    apt update
+    apt install neofetch
+    neo fetch ➡ Sẽ thấy thông tin của VPS
+    df -h ➡ Xem dung lượng của ổ cứng
+    lsblk -o NAME,SIZE,ROTA,TYPE,MOUNTPOINT ➡ Xem chi tiết ổ cứng.
+
+
+
+💛💛🧡Vào media trên VPS: 💚💛💛
+Truy cập vào VPS, chạy:
+     cd /var/lib/docker/volumes/visasaigon_media_volume
