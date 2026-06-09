@@ -10,9 +10,11 @@
 
     {% include "includes/header.html" %}
 
-    <main class="container mt-4">
+    {% block content %}{% endblock %}
+
+    {% comment %} <main class="container mt-4">
         {% block content %}{% endblock %}
-    </main>
+    </main> {% endcomment %}
 
     {% include "includes/footer.html" %}
 
@@ -28,3 +30,4 @@
     </script>
 </body>
 </html>
+

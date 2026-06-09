@@ -1,45 +1,385 @@
-visasaigon-django-postgre-docker
-├── backend/
-    │
-    ├── apps/                          ← toàn bộ Django apps
-    │   ├── accounts/
-    │   ├── visa/
-    │   └── clients/
-    │
-    ├── config/                       ← Django project root
-    │   ├── __init__.py
-    │   ├── asgi.py
-    │   ├── wsgi.py
-    │   ├── urls.py
-    │   └── settings/
-    │       ├── __init__.py
-    │       ├── base.py
-    │       ├── dev.py
-    │       ├── prod.py
-    │       └── logging.py             ← cấu hình logging riêng
-    │
-    docker/                            ← cấu hình deploy
-    │   ├── gunicorn.conf.py
-    │   ├── nginx.conf
-    │   └── entrypoint.sh
-    │
-    ├── requirements/
-    │   ├── base.txt
-    │   ├── dev.txt
-    │   └── prod.txt
-    │
-    ├── static/                        ← collectstatic (prod)
-    ├── media/                         ← user uploads
-    ├── logs/
-    │   └── django.log
-    │
-    ├── Dockerfile                     ← dev
-    ├── Dockerfile.prod                ← prod multi-stage
-    ├── .env                           ← development env
-    ├── .env.prod                      ← production env
-    ├── .env.example                   ← mẫu commit
-    │
-    ├── .gitignore
-    └── manage.py
-├── docker-compose.yml             ← dev
-├── docker-compose.prod.yml        ← prod
+﻿[ROOT] .
++-- [DIR] .github
+|   \-- [DIR] workflows
+|       \-- [FILE] deploy.yml
++-- [DIR] backend
+|   +-- [DIR] apps
+|   |   +-- [DIR] accounts
+|   |   |   +-- [DIR] migrations
+|   |   |   |   +-- [FILE] __init__.py
+|   |   |   |   \-- [FILE] 0001_initial.py
+|   |   |   +-- [FILE] __init__.py
+|   |   |   +-- [FILE] admin.py
+|   |   |   +-- [FILE] apps.py
+|   |   |   +-- [FILE] models.py
+|   |   |   +-- [FILE] tests.py
+|   |   |   +-- [FILE] urls.py
+|   |   |   \-- [FILE] views.py
+|   |   +-- [DIR] blog
+|   |   |   +-- [DIR] migrations
+|   |   |   |   +-- [FILE] __init__.py
+|   |   |   |   +-- [FILE] 0001_initial.py
+|   |   |   |   \-- [FILE] 0002_alter_blogcategory_options_alter_blogpost_options_and_more.py
+|   |   |   +-- [FILE] __init__.py
+|   |   |   +-- [FILE] admin.py
+|   |   |   +-- [FILE] apps.py
+|   |   |   +-- [FILE] models.py
+|   |   |   +-- [FILE] tests.py
+|   |   |   \-- [FILE] views.py
+|   |   +-- [DIR] clients
+|   |   |   +-- [DIR] migrations
+|   |   |   |   +-- [FILE] __init__.py
+|   |   |   |   +-- [FILE] 0001_initial.py
+|   |   |   |   \-- [FILE] 0002_alter_application_options_and_more.py
+|   |   |   +-- [FILE] __init__.py
+|   |   |   +-- [FILE] admin.py
+|   |   |   +-- [FILE] apps.py
+|   |   |   +-- [FILE] forms.py
+|   |   |   +-- [FILE] models.py
+|   |   |   +-- [FILE] tests.py
+|   |   |   +-- [FILE] urls.py
+|   |   |   +-- [FILE] utils.py
+|   |   |   \-- [FILE] views.py
+|   |   +-- [DIR] company
+|   |   |   +-- [DIR] management
+|   |   |   |   \-- [DIR] commands
+|   |   |   |       \-- [FILE] seed_company.py
+|   |   |   +-- [DIR] migrations
+|   |   |   |   +-- [FILE] __init__.py
+|   |   |   |   +-- [FILE] 0001_initial.py
+|   |   |   |   \-- [FILE] 0002_alter_companyprofile_description_and_more.py
+|   |   |   +-- [FILE] __init__.py
+|   |   |   +-- [FILE] admin.py
+|   |   |   +-- [FILE] apps.py
+|   |   |   +-- [FILE] context_processors.py
+|   |   |   +-- [FILE] models.py
+|   |   |   +-- [FILE] tests.py
+|   |   |   \-- [FILE] views.py
+|   |   +-- [DIR] core_app
+|   |   |   +-- [DIR] migrations
+|   |   |   |   \-- [FILE] __init__.py
+|   |   |   +-- [FILE] __init__.py
+|   |   |   +-- [FILE] admin.py
+|   |   |   +-- [FILE] apps.py
+|   |   |   +-- [FILE] models.py
+|   |   |   +-- [FILE] tests.py
+|   |   |   \-- [FILE] views.py
+|   |   +-- [DIR] faq
+|   |   |   +-- [DIR] migrations
+|   |   |   |   +-- [FILE] __init__.py
+|   |   |   |   +-- [FILE] 0001_initial.py
+|   |   |   |   \-- [FILE] 0002_alter_faqcategory_options_alter_faqitem_options_and_more.py
+|   |   |   +-- [FILE] __init__.py
+|   |   |   +-- [FILE] admin.py
+|   |   |   +-- [FILE] apps.py
+|   |   |   +-- [FILE] models.py
+|   |   |   +-- [FILE] tests.py
+|   |   |   \-- [FILE] views.py
+|   |   +-- [DIR] pages
+|   |   |   +-- [DIR] migrations
+|   |   |   |   +-- [FILE] __init__.py
+|   |   |   |   +-- [FILE] 0001_initial.py
+|   |   |   |   \-- [FILE] 0002_alter_page_options_alter_page_content.py
+|   |   |   +-- [FILE] __init__.py
+|   |   |   +-- [FILE] admin.py
+|   |   |   +-- [FILE] apps.py
+|   |   |   +-- [FILE] models.py
+|   |   |   +-- [FILE] tests.py
+|   |   |   +-- [FILE] urls.py
+|   |   |   \-- [FILE] views.py
+|   |   +-- [DIR] visa
+|   |   |   +-- [DIR] management
+|   |   |   |   \-- [DIR] commands
+|   |   |   |       +-- [FILE] seed_country_detail.py
+|   |   |   |       +-- [FILE] seed_visa_cong_tac_canada.py
+|   |   |   |       +-- [FILE] seed_visa_cong_tac_schengen.py
+|   |   |   |       +-- [FILE] seed_visa_cong_tac_uc.py
+|   |   |   |       +-- [FILE] seed_visa_cong_tac_usa.py
+|   |   |   |       +-- [FILE] seed_visa_du_lich_canada.py
+|   |   |   |       +-- [FILE] seed_visa_du_lich_schengen.py
+|   |   |   |       +-- [FILE] seed_visa_du_lich_uc.py
+|   |   |   |       +-- [FILE] seed_visa_du_lich_usa.py
+|   |   |   |       +-- [FILE] seed_visa_tham_than_canada.py
+|   |   |   |       +-- [FILE] seed_visa_tham_than_schengen.py
+|   |   |   |       +-- [FILE] seed_visa_tham_than_uc.py
+|   |   |   |       \-- [FILE] seed_visa_tham_than_usa.py
+|   |   |   +-- [DIR] migrations
+|   |   |   |   +-- [FILE] __init__.py
+|   |   |   |   +-- [FILE] 0001_initial.py
+|   |   |   |   \-- [FILE] 0002_alter_country_options_alter_countrydetail_options_and_more.py
+|   |   |   +-- [FILE] __init__.py
+|   |   |   +-- [FILE] admin.py
+|   |   |   +-- [FILE] apps.py
+|   |   |   +-- [FILE] context_processors.py
+|   |   |   +-- [FILE] models.py
+|   |   |   +-- [FILE] tests.py
+|   |   |   +-- [FILE] urls.py
+|   |   |   \-- [FILE] views.py
+|   |   \-- [FILE] __init__.py
+|   +-- [DIR] config
+|   |   +-- [DIR] settings
+|   |   |   +-- [FILE] __init__.py
+|   |   |   +-- [FILE] base.py
+|   |   |   +-- [FILE] dev.py
+|   |   |   \-- [FILE] prod.py
+|   |   +-- [FILE] __init__.py
+|   |   +-- [FILE] asgi.py
+|   |   +-- [FILE] urls.py
+|   |   \-- [FILE] wsgi.py
+|   +-- [DIR] core
+|   |   +-- [DIR] management
+|   |   |   \-- [DIR] commands
+|   |   |       +-- [FILE] __init__.py
+|   |   |       \-- [FILE] seed_all.py
+|   |   +-- [FILE] apps.py
+|   |   +-- [FILE] init.py
+|   |   +-- [FILE] middleware.py
+|   |   +-- [FILE] signals.py
+|   |   \-- [FILE] utils.py
+|   +-- [DIR] docker
+|   |   +-- [FILE] entrypoint.sh
+|   |   +-- [FILE] gunicorn.conf.py
+|   |   +-- [FILE] nginx.conf
+|   |   \-- [FILE] old_entrypoint.sh
+|   +-- [DIR] logs
+|   |   \-- [FILE] django.log
+|   +-- [DIR] requirements
+|   |   \-- [FILE] prod.txt
+|   +-- [DIR] static
+|   |   +-- [DIR] clients
+|   |   |   +-- [FILE] application_form.css
+|   |   |   \-- [FILE] application_form_add_upload_line.js
+|   |   +-- [DIR] css
+|   |   +-- [DIR] images
+|   |   +-- [DIR] js
+|   |   |   \-- [FILE] contact.js
+|   |   +-- [DIR] libs
+|   |   +-- [DIR] theme
+|   |   |   +-- [DIR] css
+|   |   |   |   +-- [FILE] bootstrap.min.css
+|   |   |   |   \-- [FILE] style.css
+|   |   |   +-- [DIR] img
+|   |   |   |   +-- [FILE] about-2.png
+|   |   |   |   +-- [FILE] about-3.jpg
+|   |   |   |   +-- [FILE] australia.png
+|   |   |   |   +-- [FILE] brand-logo.png
+|   |   |   |   +-- [FILE] brazil.jpg
+|   |   |   |   +-- [FILE] breadcrumb.png
+|   |   |   |   +-- [FILE] canada.png
+|   |   |   |   +-- [FILE] carousel-1.jpg
+|   |   |   |   +-- [FILE] carousel-2.jpg
+|   |   |   |   +-- [FILE] country-1.jpg
+|   |   |   |   +-- [FILE] country-2.jpg
+|   |   |   |   +-- [FILE] country-3.jpg
+|   |   |   |   +-- [FILE] country-canada.jpg
+|   |   |   |   +-- [FILE] country-schengen.jpg
+|   |   |   |   +-- [FILE] country-uc.jpg
+|   |   |   |   +-- [FILE] country-usa.jpg
+|   |   |   |   +-- [FILE] country-usa.png
+|   |   |   |   +-- [FILE] cover_image_australia.jpg
+|   |   |   |   +-- [FILE] cover_image_canada.jpg
+|   |   |   |   +-- [FILE] cover_image_usa.jpg
+|   |   |   |   +-- [FILE] favicon.ico
+|   |   |   |   +-- [FILE] favicon.png
+|   |   |   |   +-- [FILE] india.jpg
+|   |   |   |   +-- [FILE] italy.jpg
+|   |   |   |   +-- [FILE] nha-trang-500x400.jpg
+|   |   |   |   +-- [FILE] office-1.jpg
+|   |   |   |   +-- [FILE] office-2.jpg
+|   |   |   |   +-- [FILE] office-3.jpg
+|   |   |   |   +-- [FILE] office-4.jpg
+|   |   |   |   +-- [FILE] phu-quoc-500x400.jpg
+|   |   |   |   +-- [FILE] sapa-500x400.jpg
+|   |   |   |   +-- [FILE] schengen.jpg
+|   |   |   |   +-- [FILE] schengen.png
+|   |   |   |   +-- [FILE] service-1.jpg
+|   |   |   |   +-- [FILE] service-2.jpg
+|   |   |   |   +-- [FILE] service-3.jpg
+|   |   |   |   +-- [FILE] service-4.jpg
+|   |   |   |   +-- [FILE] testimonial-1.jpg
+|   |   |   |   +-- [FILE] testimonial-2.jpg
+|   |   |   |   +-- [FILE] testimonial-3.jpg
+|   |   |   |   +-- [FILE] training-1.jpg
+|   |   |   |   +-- [FILE] training-2.jpg
+|   |   |   |   +-- [FILE] training-3.jpg
+|   |   |   |   +-- [FILE] training-4.jpg
+|   |   |   |   +-- [FILE] usa.jpg
+|   |   |   |   \-- [FILE] visa_result.png
+|   |   |   +-- [DIR] js
+|   |   |   |   \-- [FILE] main.js
+|   |   |   +-- [DIR] lib
+|   |   |   |   +-- [DIR] animate
+|   |   |   |   |   +-- [FILE] animate.css
+|   |   |   |   |   \-- [FILE] animate.min.css
+|   |   |   |   +-- [DIR] counterup
+|   |   |   |   |   \-- [FILE] counterup.min.js
+|   |   |   |   +-- [DIR] easing
+|   |   |   |   |   +-- [FILE] easing.js
+|   |   |   |   |   \-- [FILE] easing.min.js
+|   |   |   |   +-- [DIR] owlcarousel
+|   |   |   |   |   +-- [DIR] assets
+|   |   |   |   |   |   +-- [FILE] ajax-loader.gif
+|   |   |   |   |   |   +-- [FILE] owl.carousel.css
+|   |   |   |   |   |   +-- [FILE] owl.carousel.min.css
+|   |   |   |   |   |   +-- [FILE] owl.theme.default.css
+|   |   |   |   |   |   +-- [FILE] owl.theme.default.min.css
+|   |   |   |   |   |   +-- [FILE] owl.theme.green.css
+|   |   |   |   |   |   +-- [FILE] owl.theme.green.min.css
+|   |   |   |   |   |   \-- [FILE] owl.video.play.png
+|   |   |   |   |   +-- [FILE] LICENSE
+|   |   |   |   |   +-- [FILE] owl.carousel.js
+|   |   |   |   |   \-- [FILE] owl.carousel.min.js
+|   |   |   |   +-- [DIR] waypoints
+|   |   |   |   |   +-- [FILE] links.php
+|   |   |   |   |   \-- [FILE] waypoints.min.js
+|   |   |   |   \-- [DIR] wow
+|   |   |   |       +-- [FILE] wow.js
+|   |   |   |       \-- [FILE] wow.min.js
+|   |   |   +-- [DIR] scss
+|   |   |   |   +-- [DIR] bootstrap
+|   |   |   |   |   \-- [DIR] scss
+|   |   |   |   |       +-- [DIR] forms
+|   |   |   |   |       |   +-- [FILE] _floating-labels.scss
+|   |   |   |   |       |   +-- [FILE] _form-check.scss
+|   |   |   |   |       |   +-- [FILE] _form-control.scss
+|   |   |   |   |       |   +-- [FILE] _form-range.scss
+|   |   |   |   |       |   +-- [FILE] _form-select.scss
+|   |   |   |   |       |   +-- [FILE] _form-text.scss
+|   |   |   |   |       |   +-- [FILE] _input-group.scss
+|   |   |   |   |       |   +-- [FILE] _labels.scss
+|   |   |   |   |       |   \-- [FILE] _validation.scss
+|   |   |   |   |       +-- [DIR] helpers
+|   |   |   |   |       |   +-- [FILE] _clearfix.scss
+|   |   |   |   |       |   +-- [FILE] _colored-links.scss
+|   |   |   |   |       |   +-- [FILE] _position.scss
+|   |   |   |   |       |   +-- [FILE] _ratio.scss
+|   |   |   |   |       |   +-- [FILE] _stretched-link.scss
+|   |   |   |   |       |   +-- [FILE] _text-truncation.scss
+|   |   |   |   |       |   \-- [FILE] _visually-hidden.scss
+|   |   |   |   |       +-- [DIR] mixins
+|   |   |   |   |       |   +-- [FILE] _alert.scss
+|   |   |   |   |       |   +-- [FILE] _border-radius.scss
+|   |   |   |   |       |   +-- [FILE] _box-shadow.scss
+|   |   |   |   |       |   +-- [FILE] _breakpoints.scss
+|   |   |   |   |       |   +-- [FILE] _buttons.scss
+|   |   |   |   |       |   +-- [FILE] _caret.scss
+|   |   |   |   |       |   +-- [FILE] _clearfix.scss
+|   |   |   |   |       |   +-- [FILE] _color-scheme.scss
+|   |   |   |   |       |   +-- [FILE] _container.scss
+|   |   |   |   |       |   +-- [FILE] _deprecate.scss
+|   |   |   |   |       |   +-- [FILE] _forms.scss
+|   |   |   |   |       |   +-- [FILE] _gradients.scss
+|   |   |   |   |       |   +-- [FILE] _grid.scss
+|   |   |   |   |       |   +-- [FILE] _image.scss
+|   |   |   |   |       |   +-- [FILE] _list-group.scss
+|   |   |   |   |       |   +-- [FILE] _lists.scss
+|   |   |   |   |       |   +-- [FILE] _pagination.scss
+|   |   |   |   |       |   +-- [FILE] _reset-text.scss
+|   |   |   |   |       |   +-- [FILE] _resize.scss
+|   |   |   |   |       |   +-- [FILE] _table-variants.scss
+|   |   |   |   |       |   +-- [FILE] _text-truncate.scss
+|   |   |   |   |       |   +-- [FILE] _transition.scss
+|   |   |   |   |       |   +-- [FILE] _utilities.scss
+|   |   |   |   |       |   \-- [FILE] _visually-hidden.scss
+|   |   |   |   |       +-- [DIR] utilities
+|   |   |   |   |       |   \-- [FILE] _api.scss
+|   |   |   |   |       +-- [DIR] vendor
+|   |   |   |   |       |   \-- [FILE] _rfs.scss
+|   |   |   |   |       +-- [FILE] _accordion.scss
+|   |   |   |   |       +-- [FILE] _alert.scss
+|   |   |   |   |       +-- [FILE] _badge.scss
+|   |   |   |   |       +-- [FILE] _breadcrumb.scss
+|   |   |   |   |       +-- [FILE] _button-group.scss
+|   |   |   |   |       +-- [FILE] _buttons.scss
+|   |   |   |   |       +-- [FILE] _card.scss
+|   |   |   |   |       +-- [FILE] _carousel.scss
+|   |   |   |   |       +-- [FILE] _close.scss
+|   |   |   |   |       +-- [FILE] _containers.scss
+|   |   |   |   |       +-- [FILE] _dropdown.scss
+|   |   |   |   |       +-- [FILE] _forms.scss
+|   |   |   |   |       +-- [FILE] _functions.scss
+|   |   |   |   |       +-- [FILE] _grid.scss
+|   |   |   |   |       +-- [FILE] _helpers.scss
+|   |   |   |   |       +-- [FILE] _images.scss
+|   |   |   |   |       +-- [FILE] _list-group.scss
+|   |   |   |   |       +-- [FILE] _mixins.scss
+|   |   |   |   |       +-- [FILE] _modal.scss
+|   |   |   |   |       +-- [FILE] _nav.scss
+|   |   |   |   |       +-- [FILE] _navbar.scss
+|   |   |   |   |       +-- [FILE] _offcanvas.scss
+|   |   |   |   |       +-- [FILE] _pagination.scss
+|   |   |   |   |       +-- [FILE] _popover.scss
+|   |   |   |   |       +-- [FILE] _progress.scss
+|   |   |   |   |       +-- [FILE] _reboot.scss
+|   |   |   |   |       +-- [FILE] _root.scss
+|   |   |   |   |       +-- [FILE] _spinners.scss
+|   |   |   |   |       +-- [FILE] _tables.scss
+|   |   |   |   |       +-- [FILE] _toasts.scss
+|   |   |   |   |       +-- [FILE] _tooltip.scss
+|   |   |   |   |       +-- [FILE] _transitions.scss
+|   |   |   |   |       +-- [FILE] _type.scss
+|   |   |   |   |       +-- [FILE] _utilities.scss
+|   |   |   |   |       +-- [FILE] _variables.scss
+|   |   |   |   |       +-- [FILE] bootstrap.scss
+|   |   |   |   |       +-- [FILE] bootstrap-grid.scss
+|   |   |   |   |       +-- [FILE] bootstrap-reboot.scss
+|   |   |   |   |       \-- [FILE] bootstrap-utilities.scss
+|   |   |   |   \-- [FILE] bootstrap.scss
+|   |   |   +-- [FILE] 404.html
+|   |   |   +-- [FILE] about.html
+|   |   |   +-- [FILE] contact.html
+|   |   |   +-- [FILE] countries.html
+|   |   |   +-- [FILE] feature.html
+|   |   |   +-- [FILE] index.html
+|   |   |   +-- [FILE] LICENSE.txt
+|   |   |   +-- [FILE] READ-ME.txt
+|   |   |   +-- [FILE] service.html
+|   |   |   +-- [FILE] testimonial.html
+|   |   |   +-- [FILE] training.html
+|   |   |   \-- [FILE] visa-immigration-website-template.jpg
+|   |   \-- [DIR] visa
+|   |       +-- [FILE] country_detail.css
+|   |       \-- [FILE] visa_requirements.css
+|   +-- [DIR] templates
+|   |   +-- [DIR] blog
+|   |   +-- [DIR] clients
+|   |   |   +-- [FILE] application_form.html
+|   |   |   \-- [FILE] success.html
+|   |   +-- [DIR] faq
+|   |   +-- [DIR] includes
+|   |   |   +-- [DIR] homepage
+|   |   |   |   +-- [FILE] about.html
+|   |   |   |   +-- [FILE] carousel.html
+|   |   |   |   +-- [FILE] countries.html
+|   |   |   |   +-- [FILE] customer_result.html
+|   |   |   |   +-- [FILE] features.html
+|   |   |   |   \-- [FILE] modal_search.html
+|   |   |   +-- [FILE] footer.html
+|   |   |   +-- [FILE] head.html
+|   |   |   \-- [FILE] header.html
+|   |   +-- [DIR] pages
+|   |   |   +-- [FILE] about.html
+|   |   |   +-- [FILE] contact.html
+|   |   |   \-- [FILE] home.html
+|   |   +-- [DIR] visa
+|   |   |   +-- [FILE] country_detail.html
+|   |   |   +-- [FILE] country_list.html
+|   |   |   \-- [FILE] requirements.html
+|   |   \-- [FILE] base.html
+|   +-- [FILE] .dockerignore
+|   +-- [FILE] .env
+|   +-- [FILE] .env.example
+|   +-- [FILE] .env.prod
+|   +-- [FILE] .gitignore
+|   +-- [FILE] Dockerfile
+|   +-- [FILE] Dockerfile.prod
+|   +-- [FILE] manage.py
+|   \-- [FILE] requirements.txt
++-- [FILE] deploy_instruction.md
++-- [FILE] docker-compose.prod.yml
++-- [FILE] docker-compose.yml
++-- [FILE] Import_database_to_Linode.txt
++-- [FILE] README.md
++-- [FILE] structure.txt
++-- [FILE] structure_05.03.26.txt
+\-- [FILE] tree.ps1
