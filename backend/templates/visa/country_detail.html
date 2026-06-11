@@ -66,7 +66,7 @@
             <!-- Text -->
             <div class="col-lg-7 text-white wow fadeInLeft" data-wow-delay="0.2s">
                 <h1 class="display-6 fw-bold wow fadeInUp text-muted" data-wow-delay="0.3s">
-                    {{ detail.hero_title|default:"Dịch Vụ Xin Visa "|add:country.name }}
+                    {{ detail.hero_title }}
                 </h1>
                 <p class="lead mt-3 wow fadeInUp" data-wow-delay="0.45s">
                     {{ detail.hero_subtitle|default:"Tư vấn hồ sơ, thủ tục và kinh nghiệm xin visa "|add:country.name|add:" mới nhất. Đồng hành cùng bạn từ khâu chuẩn bị hồ sơ đến khi nhận kết quả." }}
@@ -101,7 +101,7 @@
         <div class="col-12">
             <div class="p-4 info-card shadow-sm">
                 <h2 class="section-title">
-                    {{ detail.overview_title|default:"Tổng Quan Về Visa "|add:country.name }}
+                    {{ detail.overview_title }}
                 </h2>
                 <p class="mt-2 mb-0">{{ detail.overview_content|safe }}</p>
             </div>
