@@ -19,6 +19,8 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.visasaigon.net",
 ]
 
+SITE_URL = "https://visasaigon.net"
+
 # STATICFILES_DIRS = []  # production không dùng STATICFILES_DIRS
 
 # -----------------------------------------------------------------------------

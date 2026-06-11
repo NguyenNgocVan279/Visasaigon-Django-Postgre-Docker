@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}
+    Dịch Vụ Xin Visa Các Nước Uy Tín | Visa Úc, Mỹ, Canada, Schengen | VisaSaigon.net
+{% endblock %}
+
+{% block meta_description %}
+    VisaSaigon chuyên tư vấn và hỗ trợ xin visa Úc, Mỹ, Canada, Schengen và nhiều quốc gia khác. Xem chi tiết hồ sơ, thủ tục và quy trình xin visa mới nhất.
+{% endblock %}
+
+{% block meta_keywords %}
+    visa Úc, visa Mỹ, visa Canada, visa Schengen, dịch vụ xin visa các nước, thủ tục xin visa, hồ sơ xin visa
+{% endblock %}
+
 {% block content %}
 
 <div class="container-fluid country overflow-hidden py-5">
@@ -9,11 +21,9 @@
             <div class="sub-style">
                 <h5 class="sub-title text-primary px-3">Các Quốc Gia Mà Chúng Tôi Hỗ Trợ Dịch Vụ Visa</h5>
             </div>
-            <h1 class="display-5 mb-4">Bấm Vào Hình Để Chọn Quốc Gia</h1>
+            <h1 class="display-5 mb-4">Dịch Vụ Xin Visa Các Quốc Gia</h1>
             <p class="mb-0">
-                Chúng tôi tự hào cung cấp dịch vụ visa chuyên nghiệp và tận tâm đến các quốc gia trên thế giới. 
-                Với kinh nghiệm dày dặn và đội ngũ nhân viên giàu kiến thức, chúng tôi cam kết mang đến giải pháp tối ưu và nhanh chóng cho hành trình của bạn. 
-                Hãy để chúng tôi đồng hành cùng bạn chinh phục những chân trời mới!
+                VisaSaigon hỗ trợ tư vấn và xử lý hồ sơ xin visa Úc, Mỹ, Canada, Schengen và nhiều quốc gia khác cho mục đích du lịch, công tác và thăm thân. Chọn quốc gia bên dưới để xem điều kiện, hồ sơ và quy trình xin visa chi tiết.
             </p>
         </div>
         <div class="row g-4 text-center">
@@ -23,19 +33,19 @@
                     <div class="country-item">
                         <div class="rounded overflow-hidden">
                             {% if c.cover_image %}
-                            <img src="{{ c.cover_image.url }}" class="img-fluid w-100 rounded" alt="Image">
+                            <img src="{{ c.cover_image.url }}" class="img-fluid w-100 rounded" alt="Dịch vụ xin visa {{ c.name }} tại VisaSaigon">
                             {% endif %}
                         </div>
                         <div class="country-flag mt-3">
                             {% if c.flag_image %}
-                            <img src="{{ c.flag_image.url }}" class="img-fluid rounded-circle" alt="Image">
+                            <img src="{{ c.flag_image.url }}" class="img-fluid rounded-circle" alt="Quốc kỳ {{ c.name }}">
                             {% endif %}
                         </div>
                         <div class="country-name mt-3 fs-4">
-                            Visa {{ c.name }}
+                            Dịch vụ xin Visa {{ c.name }}
                         </div>
                         <div class="visa-badge mt-2">
-                            Visa {{ c.name }}
+                            Xem chi tiết hồ sơ
                         </div>
                     </div>
                 </a>

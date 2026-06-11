@@ -66,6 +66,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "apps.company.context_processors.company_profile", # Company profile
                 'apps.visa.context_processors.visa_countries', # countries
+                "config.context_processors.site_settings",
             ],
         },
     },
@@ -116,3 +117,5 @@ EMAIL_PORT = os.environ.get("EMAIL_PORT", "")
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "")
+
+SITE_URL = os.environ.get("SITE_URL", "http://127.0.0.1:8000")
