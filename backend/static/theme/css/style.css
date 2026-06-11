@@ -905,3 +905,7 @@
     background: var(--bs-secondary) !important;
 }
 /*** copyright end ***/
+
+.text-justify {
+    text-align: justify !important;
+}
