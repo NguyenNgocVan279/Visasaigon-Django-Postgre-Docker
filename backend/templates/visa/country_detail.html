@@ -13,6 +13,22 @@
     visa {{ country.name }}, xin visa {{ country.name }}, hồ sơ visa {{ country.name }}, thủ tục visa {{ country.name }}, dịch vụ visa {{ country.name }}
 {% endblock %}
 
+{% block og_title %}
+    Dịch Vụ Xin Visa {{ country.name }} Uy Tín | VisaSaigon.net
+{% endblock %}
+
+{% block og_description %}
+    VisaSaigon hỗ trợ tư vấn và xử lý hồ sơ xin visa {{ country.name }} chuyên nghiệp. Cập nhật thủ tục và kinh nghiệm mới nhất.
+{% endblock %}
+
+{% block og_image %}
+    {% if country.cover_image %}
+        {{ SITE_URL }}{{ country.cover_image.url }}
+    {% else %}
+        {{ SITE_URL }}{% static 'theme/img/banner-visa-uc-visasaigon.webp' %}
+    {% endif %}
+{% endblock %}
+
 {% block body_extra %}
     {% if faqs %}
     <script type="application/ld+json">

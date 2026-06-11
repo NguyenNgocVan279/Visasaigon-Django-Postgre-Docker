@@ -19,10 +19,37 @@ from django.urls import path, re_path, include
 from django.http import HttpResponse
 from django.conf import settings
 from django.views.static import serve
+from django.contrib.sitemaps.views import sitemap
+from django.views.generic import TemplateView
 
+from apps.pages.sitemaps import StaticViewSitemap
+from apps.visa.sitemaps import CountrySitemap
 
 urlpatterns = [
+
+    path(
+        "robots.txt",
+        TemplateView.as_view(
+            template_name="robots.txt",
+            content_type="text/plain"
+        ),
+    ),
+
     path("admin/", admin.site.urls),
+
+    path(
+        "sitemap.xml",
+        sitemap,
+        {
+            "sitemaps": {
+                "static": StaticViewSitemap,
+                "countries": CountrySitemap,
+            }
+        },
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
+
+
     # Pages
     path("", include(("apps.pages.urls", "pages"), namespace="pages")),
     #visa

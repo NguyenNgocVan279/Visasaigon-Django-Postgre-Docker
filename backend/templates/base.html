@@ -17,6 +17,23 @@
           content="{% block meta_keywords %}visa Úc, visa Mỹ, visa Canada, visa Schengen, dịch vụ làm visa, xin visa du lịch, visa công tác, visa thăm thân{% endblock %}">
 
     <link rel="canonical" href="{{ SITE_URL }}{{ request.path }}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="VisaSaigon.net">
+
+    <meta property="og:title"
+        content="{% block og_title %}VisaSaigon.net{% endblock %}">
+
+    <meta property="og:description"
+        content="{% block og_description %}Dịch vụ visa uy tín.{% endblock %}">
+
+    <meta property="og:url"
+        content="{{ SITE_URL }}{{ request.path }}">
+
+    <meta property="og:image"
+        content="{% block og_image %}{{ SITE_URL }}{% static 'theme/img/banner-visa-uc-visasaigon.webp' %}{% endblock %}">
+
+    <meta property="og:locale" content="vi_VN">
     
     {% include "includes/head.html" %}
 
