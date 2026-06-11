@@ -1,20 +1,18 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     {% include "includes/head.html" %}
     {% block styles %}{% endblock %}
 </head>
 <body>
 
+    {% block body_extra %}{% endblock %}
+
     {% include "includes/header.html" %}
 
     {% block content %}{% endblock %}
-
-    {% comment %} <main class="container mt-4">
-        {% block content %}{% endblock %}
-    </main> {% endcomment %}
 
     {% include "includes/footer.html" %}
 

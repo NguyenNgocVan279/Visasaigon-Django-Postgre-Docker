@@ -1,20 +1,41 @@
 {% load static %}
+
 <meta charset="utf-8">
-<title>Visasaigon.net - Làm Visa chuyên nghiệp</title>
+
+<title>
+    {% block title %}
+    Dịch vụ Visa Úc, Mỹ, Canada, Schengen Uy Tín | VisaSaigon.net
+    {% endblock %}
+</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="{% block meta_description %}VisaSaigon.net chuyên tư vấn và hỗ trợ xin visa Úc, Mỹ, Canada, Schengen uy tín. Cập nhật hồ sơ, thủ tục và kinh nghiệm xin visa mới nhất, giúp tăng tỷ lệ đậu visa.{% endblock %}">
+
+<meta name="keywords" content="{% block meta_keywords %}visa Úc, visa Mỹ, visa Canada, visa Schengen, dịch vụ làm visa, xin visa du lịch, visa công tác, visa thăm thân{% endblock %}">
+
+<meta name="author" content="VisaSaigon.net">
+
+<meta name="robots" content="index, follow">
+
 <meta name="csrf-token" content="{{ csrf_token }}">
 
 <link rel="icon" href="{% static 'theme/img/favicon.ico' %}" type="image/x-icon">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
 <link href="{% static 'theme/lib/animate/animate.min.css' %}" rel="stylesheet">
+
 <link href="{% static 'theme/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
 
 <link href="{% static 'theme/css/bootstrap.min.css' %}" rel="stylesheet">
+
 <link href="{% static 'theme/css/style.css' %}" rel="stylesheet">
+
