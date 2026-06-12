@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block title %}
-    Dịch Vụ Xin Visa {{ country.name }} Uy Tín | Hồ Sơ, Thủ Tục Mới Nhất | VisaSaigon.net
+    Dịch Vụ Xin Visa {{ country.name }} Uy Tín Tại TP.HCM | Tỷ Lệ Đậu Cao | Visa Sài Gòn
 {% endblock %}
 
 {% block meta_description %}
-    VisaSaigon hỗ trợ tư vấn và xử lý hồ sơ xin visa {{ country.name }} chuyên nghiệp. Cập nhật thủ tục, điều kiện, thời gian xét duyệt và kinh nghiệm xin visa {{ country.name }} mới nhất.
+    Dịch vụ xin visa {{ country.name }} uy tín tại TP.HCM. Hỗ trợ visa du lịch, thăm thân, công tác. Tư vấn hồ sơ miễn phí, hướng dẫn chi tiết, tăng tỷ lệ đậu visa {{ country.name }}. Liên hệ: 0938.635.925
 {% endblock %}
 
 {% block meta_keywords %}
@@ -14,11 +14,11 @@
 {% endblock %}
 
 {% block og_title %}
-    Dịch Vụ Xin Visa {{ country.name }} Uy Tín | VisaSaigon.net
+    Dịch Vụ Xin Visa {{ country.name }} Uy Tín Tại TP.HCM | Tỷ Lệ Đậu Cao | Visa Sài Gòn
 {% endblock %}
 
 {% block og_description %}
-    VisaSaigon hỗ trợ tư vấn và xử lý hồ sơ xin visa {{ country.name }} chuyên nghiệp. Cập nhật thủ tục và kinh nghiệm mới nhất.
+    Dịch vụ xin visa {{ country.name }} uy tín tại TP.HCM. Hỗ trợ visa du lịch, thăm thân, công tác. Tư vấn hồ sơ miễn phí, hướng dẫn chi tiết, tăng tỷ lệ đậu visa {{ country.name }}. Liên hệ: 0938.635.925
 {% endblock %}
 
 {% block og_image %}
@@ -30,6 +30,26 @@
 {% endblock %}
 
 {% block body_extra %}
+
+    <!-- LocalBusiness Schema -->
+    <script type="application/ld+json">
+    {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"Visa Sài Gòn",
+    "url":"https://visasaigon.net",
+    "telephone":"0938635925",
+    "address":{
+        "@type":"PostalAddress",
+        "streetAddress":"1B Đường 30",
+        "addressLocality":"An Khánh",
+        "addressRegion":"TP.HCM",
+        "addressCountry":"VN"
+    }
+    }
+    </script>
+
+
     {% if faqs %}
     <script type="application/ld+json">
     {
@@ -69,7 +89,12 @@
                     {{ detail.hero_title }}
                 </h1>
                 <p class="lead mt-3 wow fadeInUp" data-wow-delay="0.45s">
-                    {{ detail.hero_subtitle|default:"Tư vấn hồ sơ, thủ tục và kinh nghiệm xin visa "|add:country.name|add:" mới nhất. Đồng hành cùng bạn từ khâu chuẩn bị hồ sơ đến khi nhận kết quả." }}
+                    {% if detail.hero_subtitle %}
+                        {{ detail.hero_subtitle }}
+                    {% else %}
+                        Tư vấn hồ sơ, thủ tục và kinh nghiệm xin visa {{ country.name }} mới nhất.
+                        Đồng hành cùng bạn từ khâu chuẩn bị hồ sơ đến khi nhận kết quả.
+                    {% endif %}
                 </p>
             </div>
 
@@ -129,7 +154,7 @@
         <div class="col-lg-6 order-lg-2 wow fadeInRight" data-wow-delay="0.15s">
             {% if section.image %}
             <div class="rounded overflow-hidden shadow-sm">
-                <img src="{{ section.image.url }}" class="w-100 wow fadeInUp" data-wow-delay="0.2s" style="height:180px;object-fit:cover;">
+                <img src="{{ section.image.url }}" class="w-100 wow fadeInUp" data-wow-delay="0.2s" style="height:180px;object-fit:cover;" alt="{{ section.title }} visa {{ country.name }}">
             </div>
             {% endif %}
         </div>
@@ -234,7 +259,7 @@
                     <p class="mb-0">Đội ngũ chúng tôi tư vấn miễn phí, kiểm tra hồ sơ & tối ưu thư giải trình.</p>
                 </div>
                 <div class="mt-3 mt-md-0">
-                    <a href="{% url 'pages:lien-he' %}" class="btn btn-lg btn-light pulse-soft">Liên hệ tư vấn</a>
+                    <a href="tel:{{ profile.hotline }}" class="btn btn-lg btn-light pulse-soft">Gọi ngay</a>
                 </div>
             </div>
         </div>
